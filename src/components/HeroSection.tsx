@@ -1,6 +1,6 @@
 import React from 'react';
 import { Product } from '../types';
-import { ShoppingCart, Phone, Check, ShieldCheck, Zap } from 'lucide-react';
+import { ShoppingCart, Phone, Zap } from 'lucide-react';
 
 interface HeroSectionProps {
   onShopClick: () => void;
@@ -51,18 +51,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               Choose your license. Activate instantly.
             </p>
 
-            {/* Warranty summary pills */}
-            <div className="mt-5 flex flex-wrap gap-2.5 text-xs">
-              <span className="inline-flex items-center gap-1.5 rounded-lg bg-[#112419]/90 border border-emerald-500/40 px-3 py-1.5 font-bold text-emerald-300">
-                <Check className="h-3.5 w-3.5 text-emerald-400" />
-                <span>Netflix 4K ($1.99) - Garanti Yes</span>
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-lg bg-[#261e12]/90 border border-amber-500/40 px-3 py-1.5 font-bold text-amber-300">
-                <ShieldCheck className="h-3.5 w-3.5 text-amber-400" />
-                <span>Windows Keys &amp; Spotify ($2.99) - No Garanti</span>
-              </span>
-            </div>
-
             {/* Action buttons matching screenshot */}
             <div className="mt-7 flex flex-wrap items-center gap-3.5">
               <button
@@ -101,8 +89,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-bold text-sky-400 uppercase">Windows Key</span>
-                  <span className="text-[10px] font-bold text-amber-300 bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-500/30">
-                    No Garanti
+                  <span className="text-[10px] font-bold text-slate-300 bg-slate-800/80 px-1.5 py-0.5 rounded border border-slate-700/50">
+                    GLOBAL
                   </span>
                 </div>
                 <p className="text-xs font-bold text-white truncate mt-0.5">{win11.title}</p>
@@ -127,8 +115,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-bold text-red-400 uppercase">Streaming</span>
-                  <span className="text-[10px] font-bold text-emerald-300 bg-emerald-400/10 px-1.5 py-0.5 rounded border border-emerald-500/30">
-                    Garanti Yes
+                  <span className="text-[10px] font-bold text-red-300 bg-red-950/60 px-1.5 py-0.5 rounded border border-red-500/30">
+                    4K UHD
                   </span>
                 </div>
                 <p className="text-xs font-bold text-white truncate mt-0.5">{netflix.title}</p>
@@ -153,8 +141,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-bold text-emerald-400 uppercase">Streaming</span>
-                  <span className="text-[10px] font-bold text-amber-300 bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-500/30">
-                    No Garanti
+                  <span className="text-[10px] font-bold text-emerald-300 bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-500/30">
+                    PREMIUM
                   </span>
                 </div>
                 <p className="text-xs font-bold text-white truncate mt-0.5">{spotify.title}</p>

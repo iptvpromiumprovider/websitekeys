@@ -1,6 +1,6 @@
 import React from 'react';
 import { Product } from '../types';
-import { ShoppingCart, Zap, Check, ShieldCheck, Laptop, Globe, Layers } from 'lucide-react';
+import { ShoppingCart, Zap, Laptop, Globe, Layers, CheckCircle2 } from 'lucide-react';
 
 interface ProductCardRoyalProps {
   product: Product;
@@ -15,7 +15,6 @@ export const ProductCardRoyal: React.FC<ProductCardRoyalProps> = ({
   onInstantBuy,
   onQuickView,
 }) => {
-  const isGuaranteed = product.warrantyStatus === 'guaranteed';
   const discount = product.discountPercent ?? Math.round(
     ((product.originalPrice - product.currentPrice) / product.originalPrice) * 100
   );
@@ -85,19 +84,16 @@ export const ProductCardRoyal: React.FC<ProductCardRoyalProps> = ({
           {product.title}
         </h3>
 
-        {/* Warranty Tag (Netflix Garanti Yes vs Windows/Spotify No Garanti) */}
-        <div className="mt-2 flex items-center">
-          {isGuaranteed ? (
-            <span className="inline-flex items-center gap-1 rounded bg-emerald-950/80 border border-emerald-500/40 px-1.5 py-0.5 text-[10px] font-extrabold text-emerald-300">
-              <Check className="h-3 w-3 text-emerald-400" />
-              <span>Garanti Yes</span>
-            </span>
-          ) : (
-            <span className="inline-flex items-center gap-1 rounded bg-amber-950/80 border border-amber-500/40 px-1.5 py-0.5 text-[10px] font-bold text-amber-300">
-              <ShieldCheck className="h-3 w-3 text-amber-400" />
-              <span>No Garanti</span>
-            </span>
-          )}
+        {/* Region & Stock Info */}
+        <div className="mt-2 flex items-center justify-between text-[11px] text-slate-400">
+          <span className="inline-flex items-center gap-1 font-medium text-slate-300">
+            <Globe className="h-3 w-3 text-slate-400" />
+            <span>GLOBAL</span>
+          </span>
+          <span className="inline-flex items-center gap-1 text-[10px] text-emerald-400 font-medium">
+            <CheckCircle2 className="h-2.5 w-2.5" />
+            <span>In Stock</span>
+          </span>
         </div>
       </div>
 

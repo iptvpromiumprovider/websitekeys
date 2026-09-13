@@ -19,6 +19,7 @@ interface HeaderProps {
   onOpenCart: () => void;
   onOpenBlueprint?: () => void;
   onSelectCategory?: (category: string) => void;
+  onHomeClick?: () => void;
   products: Product[];
   onSelectProduct: (product: Product) => void;
   onOpenAccount: () => void;
@@ -32,6 +33,7 @@ export const Header: React.FC<HeaderProps> = ({
   onSelectProduct,
   onOpenAccount,
   onSelectCategory,
+  onHomeClick,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -122,6 +124,7 @@ export const Header: React.FC<HeaderProps> = ({
             href="#"
             onClick={(e) => {
               e.preventDefault();
+              if (onHomeClick) onHomeClick();
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             className="shrink-0 flex items-center cursor-pointer"

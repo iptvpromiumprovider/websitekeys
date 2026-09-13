@@ -1,6 +1,6 @@
 import React from 'react';
 import { CartItem } from '../types';
-import { X, Trash2, ShieldCheck, Zap, ArrowRight, Lock, ShoppingCart } from 'lucide-react';
+import { X, Trash2, ShieldCheck, Check, Zap, ArrowRight, Lock, ShoppingCart } from 'lucide-react';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -62,12 +62,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               <div className="text-center py-16">
                 <p className="text-sm font-semibold text-white">Your cart is currently empty</p>
                 <p className="mt-1 text-xs text-slate-400">
-                  Select a digital game or software license to get started.
+                  Select a digital software license to get started.
                 </p>
                 <button
                   type="button"
                   onClick={onClose}
-                  className="mt-4 rounded-xl bg-[#F59E0B] px-5 py-2.5 text-xs font-bold text-black hover:bg-amber-400 transition-colors"
+                  className="mt-4 rounded-xl bg-[#F59E0B] px-5 py-2.5 text-xs font-bold text-black hover:bg-amber-400 transition-colors cursor-pointer"
                 >
                   Browse Store Catalog
                 </button>
@@ -92,7 +92,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         <button
                           type="button"
                           onClick={() => onRemoveItem(item.product.id)}
-                          className="text-slate-500 hover:text-rose-400 p-1"
+                          className="text-slate-500 hover:text-rose-400 p-1 cursor-pointer"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
                         </button>
@@ -100,6 +100,19 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       <span className="text-[10px] text-slate-400 mt-0.5 block">
                         {item.product.platformTag || item.product.platform} • {item.product.edition}
                       </span>
+
+                      {/* Warranty Status inside Cart */}
+                      {item.product.warrantyStatus === 'guaranteed' ? (
+                        <div className="mt-1 flex items-center gap-1 text-[10px] font-bold text-emerald-400 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-500/30 w-fit">
+                          <Check className="h-2.5 w-2.5" />
+                          <span>Garanti Yes (100% Replacement Warranty)</span>
+                        </div>
+                      ) : (
+                        <div className="mt-1 flex items-center gap-1 text-[10px] font-bold text-amber-300 bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-500/30 w-fit">
+                          <ShieldCheck className="h-2.5 w-2.5 text-amber-400" />
+                          <span>No Garanti (Wholesale Single Activation)</span>
+                        </div>
+                      )}
                     </div>
 
                     <div className="flex items-center justify-between mt-2">
@@ -107,7 +120,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         <button
                           type="button"
                           onClick={() => onUpdateQuantity(item.product.id, item.quantity - 1)}
-                          className="px-2 py-0.5 text-xs text-slate-300 hover:bg-[#252835]"
+                          className="px-2 py-0.5 text-xs text-slate-300 hover:bg-[#252835] cursor-pointer"
                         >
                           -
                         </button>
@@ -117,7 +130,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         <button
                           type="button"
                           onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
-                          className="px-2 py-0.5 text-xs text-slate-300 hover:bg-[#252835]"
+                          className="px-2 py-0.5 text-xs text-slate-300 hover:bg-[#252835] cursor-pointer"
                         >
                           +
                         </button>
@@ -155,7 +168,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 type="button"
                 id="cart-proceed-checkout"
                 onClick={onCheckout}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] py-3.5 text-sm font-extrabold text-black transition-all shadow-lg shadow-[#25D366]/10 active:scale-99"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] py-3.5 text-sm font-extrabold text-black transition-all shadow-lg shadow-[#25D366]/10 active:scale-99 cursor-pointer"
               >
                 <span>Order via WhatsApp or Email</span>
                 <ArrowRight className="h-4 w-4 stroke-[2.5]" />
