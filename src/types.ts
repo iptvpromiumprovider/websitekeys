@@ -1,4 +1,4 @@
-export type CategoryId = 'windows' | 'office' | 'software' | 'games' | 'subscriptions' | 'gift-cards';
+export type CategoryId = 'windows' | 'office' | 'software' | 'games' | 'subscriptions' | 'subscription' | 'gift-cards';
 
 export interface Product {
   id: string;
@@ -57,6 +57,13 @@ export interface FaqItem {
   question: string;
   answer: string;
   category?: string;
+}
+
+export interface ValueProp {
+  id: string;
+  title: string;
+  description: string;
+  iconName: string;
 }
 
 export interface GuideArticle {

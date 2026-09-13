@@ -80,7 +80,9 @@ export const AccountModal: React.FC<AccountModalProps> = ({
                   </div>
                   <div className="text-right">
                     <span className="text-amber-400 font-bold text-sm">${order.total.toFixed(2)}</span>
-                    <span className="text-emerald-400 text-[11px] block font-medium">✓ Dispatched</span>
+                    <span className="inline-flex items-center gap-1 text-emerald-400 text-[11px] font-medium">
+                      <Check className="h-3 w-3" /> Dispatched
+                    </span>
                   </div>
                 </div>
 

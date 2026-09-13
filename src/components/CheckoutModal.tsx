@@ -2,24 +2,23 @@ import React, { useState } from 'react';
 import { CartItem, OrderConfirmation } from '../types';
 import {
   X,
-  Lock,
-  ShieldCheck,
-  CreditCard,
-  Zap,
-  CheckCircle2,
   Copy,
-  Download,
-  Printer,
-  ExternalLink,
   Check,
+  ExternalLink,
+  Mail,
+  Phone,
+  ShoppingCart,
+  ShieldCheck,
+  Zap,
 } from 'lucide-react';
 import { RoyalLogo } from './RoyalLogo';
+import { ProductLeadForm } from './ProductLeadForm';
 
 interface CheckoutModalProps {
   isOpen: boolean;
   onClose: () => void;
   items: CartItem[];
-  onOrderCompleted: (order: OrderConfirmation) => void;
+  onOrderCompleted?: (order: OrderConfirmation) => void;
 }
 
 export const CheckoutModal: React.FC<CheckoutModalProps> = ({
@@ -28,13 +27,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   items,
   onOrderCompleted,
 }) => {
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState<'card' | 'paypal' | 'apple_pay'>('card');
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [completedOrder, setCompletedOrder] = useState<OrderConfirmation | null>(null);
-  const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [customerName, setCustomerName] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [notes, setNotes] = useState('');
+  const [copied, setCopied] = useState(false);
 
   if (!isOpen) return null;
 
@@ -43,64 +39,54 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     0
   );
 
-  const generateLicenseKey = () => {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    let key = '';
-    for (let i = 0; i < 25; i++) {
-      if (i > 0 && i % 5 === 0) key += '-';
-      key += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return key;
+  const WHATSAPP_NUMBER = '15205427975';
+  const WHATSAPP_DISPLAY = '+1 520-542-7975';
+  const CONTACT_EMAIL = '123123xr@gmail.com';
+
+  const itemsSummary = items
+    .map(
+      (item) =>
+        `- ${item.quantity}x ${item.product.title} ($${(
+          item.product.currentPrice * item.quantity
+        ).toFixed(2)})`
+    )
+    .join('\n');
+
+  const formattedMessage = `Hello RoyalCDKeys! I want to purchase the following digital license(s):
+
+${itemsSummary}
+
+Total Amount: $${total.toFixed(2)} USD
+${customerName.trim() ? `Customer Name: ${customerName.trim()}\n` : ''}${customerEmail.trim() ? `Customer Email: ${customerEmail.trim()}\n` : ''}${notes.trim() ? `Note: ${notes.trim()}\n` : ''}
+Please provide activation key delivery and instructions. Thank you!`;
+
+  const handleWhatsAppOrder = () => {
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+      formattedMessage
+    )}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  const handlePlaceOrder = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-
-    setIsProcessing(true);
-    setTimeout(() => {
-      const confirmation: OrderConfirmation = {
-        orderId: `RK-${Math.floor(100000 + Math.random() * 900000)}`,
-        customerEmail: email,
-        items: [...items],
-        total,
-        date: new Date().toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-        }),
-        licenseKeys: items.flatMap((item) =>
-          Array.from({ length: item.quantity }).map(() => ({
-            productId: item.product.id,
-            productTitle: item.product.title,
-            key: generateLicenseKey(),
-            downloadUrl: item.product.categoryId === 'windows'
-              ? 'https://www.microsoft.com/software-download/windows11'
-              : item.product.categoryId === 'office'
-              ? 'https://setup.office.com'
-              : 'https://store.steampowered.com',
-          }))
-        ),
-      };
-
-      setCompletedOrder(confirmation);
-      onOrderCompleted(confirmation);
-      setIsProcessing(false);
-    }, 1200);
+  const handleEmailOrder = () => {
+    const subject = `Order Request: ${items
+      .map((i) => `${i.quantity}x ${i.product.title}`)
+      .join(', ')} ($${total.toFixed(2)})`;
+    const mailtoUrl = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(formattedMessage)}`;
+    window.location.href = mailtoUrl;
   };
 
-  const copyToClipboard = (key: string) => {
-    navigator.clipboard.writeText(key);
-    setCopiedKey(key);
-    setTimeout(() => setCopiedKey(null), 2500);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(formattedMessage);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto bg-black/80 backdrop-blur-sm">
       <div
-        id="checkout-modal-container"
+        id="order-modal-container"
         className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-2xl bg-[#16171f] text-slate-200 shadow-2xl border border-[#2b2d3d]"
       >
         {/* Modal Header */}
@@ -109,280 +95,225 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             <RoyalLogo size="sm" showText={false} />
             <div>
               <h2 className="text-base font-bold text-white">
-                {completedOrder ? 'Order Completed & Keys Dispatched' : 'Secure Encrypted Checkout'}
+                Complete Your Order
               </h2>
               <p className="text-[11px] text-slate-400">
-                {completedOrder
-                  ? 'Your genuine keys are ready for immediate activation.'
-                  : 'PCI-DSS Level 1 256-Bit SSL Encryption'}
+                Direct instant order via WhatsApp or Email • No checkout gateway
               </p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1.5 text-slate-400 hover:bg-[#252835] hover:text-white"
+            className="rounded-lg p-1.5 text-slate-400 hover:bg-[#252835] hover:text-white transition-colors"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        {/* ORDER COMPLETED VIEW */}
-        {completedOrder ? (
-          <div className="p-6 sm:p-8 space-y-6">
-            <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-5 text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500 text-black mb-3">
-                <Check className="h-6 w-6 stroke-[3]" />
-              </div>
-              <h3 className="text-lg font-bold text-white">Payment Authorized & Verified</h3>
-              <p className="text-xs text-emerald-300 mt-1">
-                Order Reference: <span className="font-mono font-bold text-white">{completedOrder.orderId}</span>
-              </p>
-              <p className="text-xs text-slate-300 mt-1">
-                A permanent backup copy was dispatched to: <span className="font-semibold text-white">{completedOrder.customerEmail}</span>
-              </p>
+        <div className="p-6 sm:p-8 space-y-6">
+          {/* Order Items Review */}
+          <div className="rounded-xl border border-[#272938] bg-[#1a1c26] p-4 space-y-3">
+            <div className="flex items-center justify-between border-b border-[#252737] pb-2.5">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                Selected License(s)
+              </span>
+              <span className="text-xs font-bold text-amber-400">
+                Total: ${total.toFixed(2)} USD
+              </span>
             </div>
 
-            {/* Keys Reveal Vault */}
-            <div className="space-y-4">
-              <h4 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                <Zap className="h-4 w-4 text-amber-400" />
-                <span>Your Customer License Vault:</span>
-              </h4>
-
-              {completedOrder.licenseKeys.map((item, idx) => (
+            <div className="space-y-2">
+              {items.map((item) => (
                 <div
-                  key={idx}
-                  className="rounded-xl border border-[#2e3142] bg-[#1a1c26] p-4 space-y-3"
+                  key={item.product.id}
+                  className="flex items-center justify-between text-xs sm:text-sm"
                 >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <span className="text-xs font-semibold text-white block">
-                        {item.productTitle}
-                      </span>
-                      <span className="text-[10px] text-emerald-400 font-medium">
-                        ✓ Genuine Publisher Cryptographic Key
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Key Box */}
                   <div className="flex items-center gap-2">
-                    <div className="flex-1 rounded-lg bg-[#111217] border border-[#2e3142] p-2.5 font-mono text-xs sm:text-sm font-bold text-amber-400 tracking-wider select-all overflow-x-auto">
-                      {item.key}
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => copyToClipboard(item.key)}
-                      className="flex items-center gap-1.5 rounded-lg bg-[#252836] hover:bg-amber-500 hover:text-black border border-[#34384a] px-3.5 py-2.5 text-xs font-bold text-white transition-colors"
-                    >
-                      {copiedKey === item.key ? (
-                        <>
-                          <Check className="h-3.5 w-3.5 text-emerald-400" /> Copied!
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="h-3.5 w-3.5" /> Copy
-                        </>
-                      )}
-                    </button>
+                    <span className="font-semibold text-amber-400">
+                      {item.quantity}x
+                    </span>
+                    <span className="text-slate-200 font-medium">
+                      {item.product.title}
+                    </span>
                   </div>
-
-                  {/* Download link */}
-                  <div className="flex items-center justify-between text-xs pt-1 border-t border-[#242634]">
-                    <span className="text-slate-400">Official Download Link:</span>
-                    <a
-                      href={item.downloadUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-amber-400 hover:underline font-medium"
-                    >
-                      <span>Direct Vendor Server</span>
-                      <ExternalLink className="h-3 w-3" />
-                    </a>
-                  </div>
+                  <span className="font-bold text-white">
+                    ${(item.product.currentPrice * item.quantity).toFixed(2)}
+                  </span>
                 </div>
               ))}
             </div>
 
-            <div className="flex items-center justify-between pt-4 border-t border-[#242635]">
-              <button
-                type="button"
-                onClick={onClose}
-                className="w-full rounded-xl bg-[#F59E0B] hover:bg-[#D97706] py-3 text-sm font-bold text-black transition-all"
-              >
-                Return to Store Catalog
-              </button>
+            <div className="pt-2 border-t border-[#252737] flex items-center justify-between text-xs text-slate-400">
+              <span className="flex items-center gap-1 text-emerald-400 font-medium">
+                <Check className="h-3.5 w-3.5" /> 100% Genuine Microsoft Retail License
+              </span>
+              <span className="text-emerald-400 font-semibold">Instant Dispatch</span>
             </div>
           </div>
-        ) : (
-          /* CHECKOUT FORM VIEW */
-          <form onSubmit={handlePlaceOrder} className="p-6 sm:p-8 space-y-6">
-            
-            {/* Customer Information */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                1. Digital Delivery Details
-              </h3>
+
+          {/* Instant Google Apps Script Lead / Order Form */}
+          <ProductLeadForm
+            defaultProduct={items[0]?.product.title || 'Windows 11 Pro'}
+            title="Direct Key Order & Activation Request"
+            subtitle="Enter your email and chosen product to immediately request your genuine key."
+          />
+
+          {/* Optional Details (Auto-filled into message) */}
+          <div className="space-y-3 pt-2 border-t border-[#252837]">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+              Or Order Directly via WhatsApp / Email
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
-                  Email Address (Product key and setup instructions sent here) *
+                <label className="block text-xs font-medium text-slate-400 mb-1">
+                  Your Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. John Smith"
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  className="w-full rounded-lg bg-[#111218] border border-[#2c2f3f] px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-hidden focus:border-[#F5A623]"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-400 mb-1">
+                  Email Address (for key backup)
                 </label>
                 <input
                   type="email"
-                  required
-                  placeholder="your.email@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-xl bg-[#1b1c25] border border-[#2e3142] px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-hidden focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                  placeholder="e.g. john@example.com"
+                  value={customerEmail}
+                  onChange={(e) => setCustomerEmail(e.target.value)}
+                  className="w-full rounded-lg bg-[#111218] border border-[#2c2f3f] px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-hidden focus:border-[#F5A623]"
                 />
               </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">First Name</label>
-                  <input
-                    type="text"
-                    placeholder="Alex"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    className="w-full rounded-xl bg-[#1b1c25] border border-[#2e3142] px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-hidden focus:border-amber-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">Last Name</label>
-                  <input
-                    type="text"
-                    placeholder="Morgan"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    className="w-full rounded-xl bg-[#1b1c25] border border-[#2e3142] px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-hidden focus:border-amber-500"
-                  />
-                </div>
-              </div>
             </div>
-
-            {/* Payment Method Selection */}
-            <div className="space-y-3 pt-4 border-t border-[#242635]">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                2. Select Secure Payment Gateway
-              </h3>
-              <div className="grid grid-cols-3 gap-2.5">
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod('card')}
-                  className={`rounded-xl border p-3 text-center transition-all ${
-                    paymentMethod === 'card'
-                      ? 'border-amber-400 bg-amber-500/10 text-white'
-                      : 'border-[#2c2e3e] bg-[#1a1c25] text-slate-400 hover:border-slate-500'
-                  }`}
-                >
-                  <CreditCard className="mx-auto h-5 w-5 mb-1 text-slate-300" />
-                  <span className="text-xs font-semibold block">Credit Card</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod('paypal')}
-                  className={`rounded-xl border p-3 text-center transition-all ${
-                    paymentMethod === 'paypal'
-                      ? 'border-amber-400 bg-amber-500/10 text-white'
-                      : 'border-[#2c2e3e] bg-[#1a1c25] text-slate-400 hover:border-slate-500'
-                  }`}
-                >
-                  <span className="text-base font-extrabold text-blue-400 block mb-0.5">P</span>
-                  <span className="text-xs font-semibold block">PayPal</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod('apple_pay')}
-                  className={`rounded-xl border p-3 text-center transition-all ${
-                    paymentMethod === 'apple_pay'
-                      ? 'border-amber-400 bg-amber-500/10 text-white'
-                      : 'border-[#2c2e3e] bg-[#1a1c25] text-slate-400 hover:border-slate-500'
-                  }`}
-                >
-                  <span className="text-base font-bold text-slate-200 block mb-0.5"></span>
-                  <span className="text-xs font-semibold block">Apple / GPay</span>
-                </button>
-              </div>
-
-              {/* Simulated Card Inputs */}
-              {paymentMethod === 'card' && (
-                <div className="rounded-xl border border-[#2b2e3e] bg-[#191a24] p-3.5 space-y-3">
-                  <div>
-                    <label className="block text-[11px] text-slate-400 mb-1">Card Number</label>
-                    <input
-                      type="text"
-                      placeholder="•••• •••• •••• 4242"
-                      defaultValue="4242 •••• •••• 4242"
-                      className="w-full rounded-lg bg-[#121318] border border-[#2c2f3f] px-3 py-2 text-xs font-mono text-white"
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div>
-                      <label className="block text-[11px] text-slate-400 mb-1">Expiry</label>
-                      <input
-                        type="text"
-                        placeholder="MM / YY"
-                        defaultValue="12/28"
-                        className="w-full rounded-lg bg-[#121318] border border-[#2c2f3f] px-3 py-2 text-xs font-mono text-white"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[11px] text-slate-400 mb-1">CVC</label>
-                      <input
-                        type="text"
-                        placeholder="CVC"
-                        defaultValue="888"
-                        className="w-full rounded-lg bg-[#121318] border border-[#2c2f3f] px-3 py-2 text-xs font-mono text-white"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
+            <div>
+              <label className="block text-xs font-medium text-slate-400 mb-1">
+                Additional Note or Questions (optional)
+              </label>
+              <input
+                type="text"
+                placeholder="e.g. 64-bit English license confirmation"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                className="w-full rounded-lg bg-[#111218] border border-[#2c2f3f] px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-hidden focus:border-[#F5A623]"
+              />
             </div>
+          </div>
 
-            {/* Order Items Summary */}
-            <div className="rounded-xl border border-[#272938] bg-[#181922] p-4 space-y-2">
-              <div className="flex justify-between text-xs text-slate-400">
-                <span>Items ({items.length})</span>
-                <span className="font-semibold text-white">${total.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between text-xs text-slate-400">
-                <span>Automated Instant Key Dispatch</span>
-                <span className="font-semibold text-emerald-400">FREE ($0.00)</span>
-              </div>
-              <div className="flex justify-between text-sm font-bold text-white pt-2 border-t border-[#262837]">
-                <span>Total Due</span>
-                <span className="text-amber-400 text-base">${total.toFixed(2)}</span>
-              </div>
-            </div>
+          {/* Primary Action Buttons: WhatsApp & Email */}
+          <div className="space-y-3 pt-2">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+              Choose How to Order
+            </h3>
 
-            {/* Pay Button */}
+            {/* WhatsApp Direct Button */}
             <button
-              type="submit"
-              disabled={isProcessing}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#F59E0B] hover:bg-[#D97706] py-3.5 text-sm font-extrabold text-black transition-all shadow-lg shadow-amber-500/10 active:scale-99 disabled:opacity-50"
+              type="button"
+              onClick={handleWhatsAppOrder}
+              className="w-full group flex items-center justify-between rounded-xl bg-[#25D366] hover:bg-[#20ba59] p-4 text-black font-bold transition-all shadow-lg shadow-[#25D366]/20 cursor-pointer"
             >
-              <Lock className="h-4 w-4 stroke-[2.5]" />
-              <span>
-                {isProcessing
-                  ? 'Authorizing with Publisher Server...'
-                  : `Complete Payment & Receive Key ($${total.toFixed(2)})`}
-              </span>
+              <div className="flex items-center gap-3 text-left">
+                {/* Official WhatsApp SVG Logo */}
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black/15">
+                  <svg
+                    className="h-6 w-6 text-black fill-current"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm sm:text-base font-extrabold text-black">
+                      Order via WhatsApp
+                    </span>
+                    <span className="rounded bg-black/20 px-2 py-0.5 text-[10px] font-extrabold text-black">
+                      FAST RESPONSE
+                    </span>
+                  </div>
+                  <p className="text-xs text-black/80 font-medium">
+                    Chat directly with us at {WHATSAPP_DISPLAY}
+                  </p>
+                </div>
+              </div>
+              <ExternalLink className="h-5 w-5 text-black shrink-0" />
             </button>
 
-            <div className="flex items-center justify-center gap-2 text-[11px] text-slate-400 text-center">
-              <ShieldCheck className="h-4 w-4 text-emerald-400 shrink-0" />
-              <span>
-                By completing checkout, your cryptographic keys are guaranteed authentic and refundable under our 30-day policy.
+            {/* Email Direct Button */}
+            <button
+              type="button"
+              onClick={handleEmailOrder}
+              className="w-full group flex items-center justify-between rounded-xl bg-[#F5A623] hover:bg-[#e09419] p-4 text-black font-bold transition-all shadow-lg shadow-[#F5A623]/20 cursor-pointer"
+            >
+              <div className="flex items-center gap-3 text-left">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black/15">
+                  <Mail className="h-6 w-6 text-black" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm sm:text-base font-extrabold text-black">
+                      Order via Email
+                    </span>
+                    <span className="rounded bg-black/20 px-2 py-0.5 text-[10px] font-extrabold text-black">
+                      OFFICIAL DISPATCH
+                    </span>
+                  </div>
+                  <p className="text-xs text-black/80 font-medium">
+                    Send order to {CONTACT_EMAIL}
+                  </p>
+                </div>
+              </div>
+              <ExternalLink className="h-5 w-5 text-black shrink-0" />
+            </button>
+          </div>
+
+          {/* Pre-formatted Message & Copy Option */}
+          <div className="rounded-xl border border-[#272938] bg-[#121319] p-4 space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-300">
+                Order Message Preview
               </span>
+              <button
+                type="button"
+                onClick={handleCopy}
+                className="flex items-center gap-1.5 rounded-md bg-[#222432] hover:bg-[#2e3144] px-2.5 py-1 text-xs font-semibold text-slate-200 transition-colors border border-[#31354a]"
+              >
+                {copied ? (
+                  <>
+                    <Check className="h-3.5 w-3.5 text-emerald-400" />
+                    <span>Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="h-3.5 w-3.5 text-amber-400" />
+                    <span>Copy Text</span>
+                  </>
+                )}
+              </button>
             </div>
-          </form>
-        )}
+            <pre className="whitespace-pre-wrap font-mono text-[11px] text-slate-400 bg-[#0c0d12] p-3 rounded-lg border border-[#1e202b] leading-relaxed max-h-36 overflow-y-auto">
+              {formattedMessage}
+            </pre>
+          </div>
+
+          {/* Trust Guarantees */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 border-t border-[#242635] text-xs text-slate-400">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="h-4 w-4 text-emerald-400 shrink-0" />
+              <span>100% Genuine Microsoft Retail License</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Zap className="h-4 w-4 text-amber-400 shrink-0" />
+              <span>Lifetime Transferable Activation Rights</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
+

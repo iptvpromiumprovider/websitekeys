@@ -17,7 +17,10 @@ import {
   Check,
   CreditCard,
   ShoppingCart,
+  Phone,
+  Mail,
 } from 'lucide-react';
+import { ProductLeadForm } from './ProductLeadForm';
 
 interface ProductDetailModalProps {
   product: Product | null;
@@ -131,9 +134,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   <span className="text-xs text-slate-500">SKU: {product.sku}</span>
                 </div>
 
-                <h1 className="text-xl sm:text-2xl font-bold text-white leading-snug">
+                <h2 id="modal-product-title" className="text-xl sm:text-2xl font-bold text-white leading-snug">
                   {product.title}
-                </h1>
+                </h2>
 
                 {/* Rating & In-Stock */}
                 <div className="mt-2.5 flex items-center gap-3">
@@ -173,31 +176,44 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     <span className="inline-flex items-center rounded-md bg-[#F59E0B] px-2.5 py-1 text-xs font-extrabold text-black">
                       Save ${(product.originalPrice - product.currentPrice).toFixed(2)}
                     </span>
-                    <span className="block text-[11px] text-emerald-400 mt-1 font-medium">
-                      ✓ Zero Delivery Fee
+                    <span className="inline-flex items-center gap-1 text-[11px] text-emerald-400 mt-1 font-medium">
+                      <Check className="h-3 w-3" /> Free Digital Delivery
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* CTAs */}
-              <div className="mt-6 space-y-2.5">
+              {/* Quick Google Apps Script Lead / Order Form */}
+              <div className="mt-6">
+                <ProductLeadForm
+                  defaultProduct={product.title}
+                  title="Direct Request & Instant Order"
+                  subtitle="Submit your email and selected product below to receive your genuine license."
+                />
+              </div>
+
+              {/* Direct WhatsApp / Email Actions */}
+              <div className="mt-4 pt-4 border-t border-[#252837] space-y-2">
+                <div className="text-[11px] text-slate-400 font-bold uppercase tracking-wider text-center">
+                  Or Order Directly via WhatsApp / Email
+                </div>
+
                 <button
                   type="button"
                   onClick={() => onInstantBuy(product)}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#F59E0B] hover:bg-[#D97706] py-3.5 text-sm font-extrabold text-black transition-all shadow-lg shadow-amber-500/10 active:scale-99"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] py-3 text-xs sm:text-sm font-extrabold text-black transition-all shadow-md shadow-[#25D366]/15 active:scale-99 cursor-pointer"
                 >
-                  <CreditCard className="h-4 w-4 stroke-[2.5]" />
-                  <span>Instant Buy & Reveal Key (${product.currentPrice.toFixed(2)})</span>
+                  <Phone className="h-4 w-4 stroke-[2.5]" />
+                  <span>Order via WhatsApp (+1 520-542-7975)</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => onAddToCart(product)}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#333647] bg-[#222430] hover:bg-[#2a2d3d] py-3 text-sm font-semibold text-white transition-colors"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#333647] bg-[#222430] hover:bg-[#2a2d3d] py-2.5 text-xs sm:text-sm font-semibold text-white transition-colors cursor-pointer"
                 >
                   <ShoppingCart className="h-4 w-4" />
-                  <span>Add to Cart</span>
+                  <span>Add to Cart ({product.currentPrice.toFixed(2)} USD)</span>
                 </button>
               </div>
             </div>

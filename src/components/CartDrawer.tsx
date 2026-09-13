@@ -155,16 +155,15 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 type="button"
                 id="cart-proceed-checkout"
                 onClick={onCheckout}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#F59E0B] hover:bg-[#D97706] py-3.5 text-sm font-extrabold text-black transition-all shadow-lg shadow-amber-500/10 active:scale-99"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] py-3.5 text-sm font-extrabold text-black transition-all shadow-lg shadow-[#25D366]/10 active:scale-99"
               >
-                <Lock className="h-4 w-4 stroke-[2.5]" />
-                <span>Proceed to Secure Checkout</span>
+                <span>Order via WhatsApp or Email</span>
                 <ArrowRight className="h-4 w-4 stroke-[2.5]" />
               </button>
 
               <div className="flex items-center justify-center gap-2 text-[11px] text-slate-400">
-                <ShieldCheck className="h-4 w-4 text-emerald-400" />
-                <span>256-Bit Encrypted • 30-Day Money-Back Guarantee</span>
+                <ShieldCheck className="h-4 w-4 text-emerald-400 shrink-0" />
+                <span>Direct Order • WhatsApp (+1 520-542-7975) &amp; Email Support</span>
               </div>
             </div>
           )}

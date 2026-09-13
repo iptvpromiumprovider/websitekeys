@@ -79,8 +79,13 @@ export default function App() {
 
   // Filter products by platform tag if user clicks top bar
   const displayedProducts = products.filter((p) => {
-    if (selectedPlatform === 'win11') return p.id === 'win-11-pro-retail';
-    if (selectedPlatform === 'win10') return p.id === 'win-10-pro-retail';
+    if (selectedPlatform === 'all') return true;
+    if (selectedPlatform === 'windows') return p.categoryId === 'windows';
+    if (selectedPlatform === 'office') return p.categoryId === 'office';
+    if (selectedPlatform === 'subscription') return p.categoryId === 'subscription';
+    if (selectedPlatform === 'software') return true;
+    if (selectedPlatform === 'win11') return p.tags.includes('Windows 11');
+    if (selectedPlatform === 'win10') return p.tags.includes('Windows 10');
     return true;
   });
 
@@ -107,18 +112,16 @@ export default function App() {
         selectedPlatform={selectedPlatform}
         onSelectPlatform={(platform) => {
           setSelectedPlatform(platform);
-          if (platform === 'win11' || platform === 'win10') {
-            const el = document.getElementById('windows-catalog');
-            el?.scrollIntoView({ behavior: 'smooth' });
-          }
+          const el = document.getElementById('catalog-section');
+          el?.scrollIntoView({ behavior: 'smooth' });
         }}
       />
 
       <main>
-        {/* 3. Majestic Hero Section with user uploaded panoramic image */}
+        {/* 3. Hero Section matching reference */}
         <HeroSection
           onShopClick={() => {
-            const el = document.getElementById('windows-catalog');
+            const el = document.getElementById('catalog-section');
             el?.scrollIntoView({ behavior: 'smooth' });
           }}
           onSelectProduct={(p) => setSelectedProduct(p)}
