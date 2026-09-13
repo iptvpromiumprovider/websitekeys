@@ -1,4 +1,4 @@
-export type CategoryId = 'windows' | 'office' | 'software' | 'games' | 'subscriptions' | 'subscription' | 'gift-cards';
+export type CategoryId = 'windows' | 'office' | 'software' | 'games' | 'subscriptions' | 'subscription' | 'streaming' | 'gift-cards';
 
 export interface Product {
   id: string;
@@ -7,10 +7,10 @@ export interface Product {
   shortDescription: string;
   categoryId: CategoryId;
   platform: 'Windows' | 'Mac' | 'Multi-Platform' | 'PC / Steam' | 'Cross-Platform' | string;
-  platformTag?: string; // e.g. 'Steam', 'Windows', 'Battle.net', 'Xbox One', 'macOS', 'Cross-platform'
+  platformTag?: string; // e.g. 'Steam', 'Windows', 'Battle.net', 'Xbox One', 'macOS', 'Cross-platform', 'Streaming'
   regionTag?: string; // e.g. 'GLOBAL (GL)', 'EUROPE (EU)'
   edition: string;
-  licenseType: 'Retail (Transferable)' | 'OEM (Single Device)' | 'Digital Code' | 'Subscription Key' | string;
+  licenseType: 'Retail (Transferable)' | 'OEM (Single Device)' | 'Digital Code' | 'Subscription Key' | 'Account (Instant)' | string;
   region: 'Global' | 'North America' | 'Europe' | 'Worldwide' | string;
   deliveryMethod: 'Instant Digital (Email + Dashboard)' | string;
   currentPrice: number;
@@ -25,6 +25,8 @@ export interface Product {
   isDeal?: boolean;
   imageUrl: string;
   tags: string[];
+  warrantyStatus: 'guaranteed' | 'no-warranty';
+  warrantyText: string;
   systemRequirements: {
     os: string;
     processor: string;

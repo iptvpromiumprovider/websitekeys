@@ -1,76 +1,98 @@
 import React from 'react';
-import { ShieldCheck, FileText, Clock, RefreshCw, HelpCircle, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Clock, CheckCircle2, MessageCircle, AlertCircle, Zap } from 'lucide-react';
 
 export const WhyChooseUs: React.FC = () => {
   const points = [
     {
-      icon: <FileText className="h-5 w-5 text-blue-400" />,
-      title: 'Transferable Retail Licensing',
+      icon: <ShieldCheck className="h-5 w-5 text-emerald-400" />,
+      title: 'Netflix 100% Replacement Warranty (Garanti Yes)',
       description:
-        'All keys distributed are genuine Microsoft Retail licenses. You have full legal transferability rights to move the key to another computer or new motherboard in the future.',
+        'All Netflix Premium 4K UHD accounts include a dedicated replacement warranty throughout your active billing period. If any login or profile issue arises, get an instant replacement via WhatsApp.',
+      badge: 'Garanti Yes',
+      badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
+    },
+    {
+      icon: <AlertCircle className="h-5 w-5 text-amber-400" />,
+      title: 'Windows Keys & Spotify Wholesale (No Garanti)',
+      description:
+        'We pass maximum wholesale savings directly to you: Windows 11/10 keys ($4.82-$5.43) and Spotify Premium ($2.99) are sold as-is without ongoing warranty (No Garanti / Sans Garantie) to keep prices unbeatable.',
+      badge: 'No Garanti',
+      badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
     },
     {
       icon: <Clock className="h-5 w-5 text-[#F5A623]" />,
-      title: 'Fast WhatsApp & Email Dispatch',
+      title: 'Instant Delivery via WhatsApp & Email',
       description:
-        'Order directly via WhatsApp (+1 520-542-7975) or Email (123123xr@gmail.com). Our team provides immediate digital delivery and activation assistance 24/7.',
+        'Orders are processed immediately. Receive your 25-character digital license key or streaming account credentials directly on WhatsApp (+1 520-542-7975) and in your email inbox.',
+      badge: '< 60 Seconds',
+      badgeColor: 'bg-[#F5A623]/20 text-amber-300 border-[#F5A623]/30',
     },
     {
-      icon: <CheckCircle2 className="h-5 w-5 text-emerald-400" />,
-      title: 'Official Microsoft ISO Mirrors',
+      icon: <CheckCircle2 className="h-5 w-5 text-blue-400" />,
+      title: 'Official Microsoft ISO & Software Mirrors',
       description:
-        'You never download binaries from unverified third-party hosts. We direct you solely to official Microsoft servers via the Microsoft Media Creation Tool.',
+        'Always install from official sources. Download Windows via the official Microsoft Media Creation Tool and Office from setup.office.com with zero third-party software risks.',
+      badge: 'Official Sources',
+      badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
     },
     {
-      icon: <RefreshCw className="h-5 w-5 text-[#F5A623]" />,
-      title: '30-Day Money-Back Guarantee',
+      icon: <MessageCircle className="h-5 w-5 text-green-400" />,
+      title: 'Direct WhatsApp Human Support',
       description:
-        'If a key fails to activate or if you change your mind prior to activation, our guarantee covers your order with diagnostic verification and instant refunds.',
+        'Need setup guidance or quick confirmation? Chat directly with our human specialists at +1 520-542-7975. We assist with clean installs, activation commands, and profile setup.',
+      badge: '24/7 Human',
+      badgeColor: 'bg-green-500/20 text-green-300 border-green-500/30',
     },
     {
-      icon: <ShieldCheck className="h-5 w-5 text-emerald-400" />,
-      title: 'Authorized Distribution',
+      icon: <Zap className="h-5 w-5 text-purple-400" />,
+      title: 'Zero Hidden Fees & Global Activation',
       description:
-        'Our digital software license distribution adheres strictly to digital distribution standards and official First Sale legal frameworks.',
-    },
-    {
-      icon: <HelpCircle className="h-5 w-5 text-cyan-400" />,
-      title: '24/7 Activation Support',
-      description:
-        'Encountering an error code or telephone activation prompt? Our technical activation specialists assist you until your system shows Activated with a digital license.',
+        'The price you see is the final price. No hidden processing surcharges or surprise subscription fees. All licenses are region-free Global editions.',
+      badge: 'Region-Free',
+      badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
     },
   ];
 
   return (
-    <section id="why-choose-us-section" className="py-14 sm:py-20 bg-[#121316] border-b border-[#1f2127]">
+    <section id="why-choose-us-section" className="py-14 sm:py-20 bg-[#0e1015] border-b border-[#1c1f2b]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        
+        {/* Heading */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs font-bold uppercase tracking-wider text-[#F5A623]">
-            Trust &amp; Transparency
+            Honest &amp; Transparent Terms
           </span>
-          <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-white">
+          <h2 className="mt-2 text-2xl sm:text-4xl font-black tracking-tight text-white">
             Why Buy From RoyalCDKeys
           </h2>
-          <p className="mt-2.5 text-xs sm:text-sm text-slate-400 max-w-xl mx-auto">
-            Genuine Microsoft Windows operating system licenses with zero compromises on security, speed, or customer support.
+          <p className="mt-2.5 text-xs sm:text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
+            Clear guarantee conditions, wholesale direct pricing, and human support on every single purchase.
           </p>
         </div>
 
+        {/* Feature Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {points.map((point, index) => (
             <div
               key={index}
-              className="rounded-xl border border-[#232532] bg-[#1a1b22] p-5 sm:p-6 transition-all duration-200 hover:border-[#383b4c]"
+              className="flex flex-col justify-between rounded-2xl border border-[#212433] bg-[#14161f] p-5 sm:p-6 transition-all duration-200 hover:border-[#383d54] hover:bg-[#171924]"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#222430] border border-[#2d3040] mb-3.5">
-                {point.icon}
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1d202d] border border-[#292d3f]">
+                    {point.icon}
+                  </div>
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider border ${point.badgeColor}`}>
+                    {point.badge}
+                  </span>
+                </div>
+                <h3 className="text-sm sm:text-base font-bold text-white mb-2 leading-snug">
+                  {point.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                  {point.description}
+                </p>
               </div>
-              <h3 className="text-sm sm:text-base font-bold text-white mb-1.5">
-                {point.title}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                {point.description}
-              </p>
             </div>
           ))}
         </div>

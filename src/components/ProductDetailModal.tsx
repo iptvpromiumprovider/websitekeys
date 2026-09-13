@@ -48,13 +48,13 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto bg-black/80 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto bg-black/85">
       <div
         id="product-detail-modal"
         className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto rounded-2xl bg-[#16171f] text-slate-200 shadow-2xl border border-[#2b2d3d]"
       >
         {/* Sticky Close Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[#242634] bg-[#16171f]/95 px-6 py-3.5 backdrop-blur-md">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[#242634] bg-[#16171f] px-6 py-3.5">
           <div className="flex items-center gap-2 text-xs font-medium text-slate-400">
             <span>Catalog</span>
             <span>/</span>
@@ -102,19 +102,20 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 <div className="flex items-center gap-2 text-slate-300">
                   <Zap className="h-4 w-4 text-amber-400 shrink-0" />
                   <div>
-                    <span className="font-semibold text-white">Instant Key Delivery:</span> Sent to your email & dashboard vault in under 60 seconds.
+                    <span className="font-semibold text-white">Instant Delivery:</span> Sent to your WhatsApp &amp; Email in under 60 seconds.
                   </div>
                 </div>
                 <div className="flex items-center gap-2 text-slate-300">
                   <ShieldCheck className="h-4 w-4 text-emerald-400 shrink-0" />
                   <div>
-                    <span className="font-semibold text-white">100% Guaranteed Genuine:</span> Official cryptographic publisher validation.
+                    <span className="font-semibold text-white">Authentic Digital Product:</span> Direct official servers &amp; apps.
                   </div>
                 </div>
                 <div className="flex items-center gap-2 text-slate-300">
-                  <RotateCcw className="h-4 w-4 text-blue-400 shrink-0" />
+                  <RotateCcw className={`h-4 w-4 shrink-0 ${product.warrantyStatus === 'guaranteed' ? 'text-emerald-400' : 'text-amber-400'}`} />
                   <div>
-                    <span className="font-semibold text-white">30-Day Replacement:</span> Full money-back warranty if unredeemed.
+                    <span className="font-semibold text-white">Warranty Policy:</span>{' '}
+                    {product.warrantyText || (product.warrantyStatus === 'guaranteed' ? '100% Full Replacement Warranty (Garanti Yes)' : 'Sold at wholesale discount with No Warranty (No Garanti)')}
                   </div>
                 </div>
               </div>
@@ -123,7 +124,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             {/* Right Col: Title, Pricing, and Action CTAs */}
             <div className="md:col-span-7 flex flex-col justify-between">
               <div>
-                {/* Platform / SKU Badges */}
+                {/* Platform / SKU / Warranty Badges */}
                 <div className="flex flex-wrap items-center gap-2 mb-2">
                   <span className="rounded bg-[#222430] border border-[#2e3140] px-2.5 py-0.5 text-xs font-medium text-slate-200">
                     {product.platformTag || product.platform}
@@ -131,6 +132,17 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   <span className="rounded bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 text-xs font-semibold text-amber-400">
                     {product.regionTag || product.region}
                   </span>
+                  {product.warrantyStatus === 'guaranteed' ? (
+                    <span className="inline-flex items-center gap-1 rounded bg-emerald-500/15 border border-emerald-500/40 px-2.5 py-0.5 text-xs font-bold text-emerald-300">
+                      <Check className="h-3 w-3 text-emerald-400" />
+                      <span>Garanti Yes (100% Replacement Warranty)</span>
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 rounded bg-amber-500/15 border border-amber-500/30 px-2.5 py-0.5 text-xs font-bold text-amber-300">
+                      <ShieldCheck className="h-3 w-3 text-amber-400" />
+                      <span>No Garanti (Wholesale / Sans Garantie)</span>
+                    </span>
+                  )}
                   <span className="text-xs text-slate-500">SKU: {product.sku}</span>
                 </div>
 

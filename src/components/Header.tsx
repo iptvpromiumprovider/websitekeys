@@ -5,22 +5,20 @@ import {
   Search,
   ShoppingCart,
   User,
-  ChevronDown,
-  Monitor,
-  Gamepad2,
-  Layers,
-  Flame,
-  X,
   Phone,
   Mail,
-  Zap,
+  ChevronDown,
+  X,
+  ShieldCheck,
+  CheckCircle,
+  Globe,
 } from 'lucide-react';
 
 interface HeaderProps {
   cartCount: number;
   onOpenCart: () => void;
   onOpenBlueprint?: () => void;
-  onSelectCategory?: () => void;
+  onSelectCategory?: (category: string) => void;
   products: Product[];
   onSelectProduct: (product: Product) => void;
   onOpenAccount: () => void;
@@ -33,255 +31,234 @@ export const Header: React.FC<HeaderProps> = ({
   products,
   onSelectProduct,
   onOpenAccount,
+  onSelectCategory,
 }) => {
-  const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [currency, setCurrency] = useState('United States USD $');
-  const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
 
-  const currencies = [
-    'United States USD $',
-    'European Union EUR €',
-    'United Kingdom GBP £',
-    'Canada CAD $',
-    'Australia AUD $',
-  ];
-
   const filteredProducts = searchQuery.trim()
-    ? products.filter(
-        (p) =>
+    ? products.filter((p) => {
+        return (
           p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          p.shortDescription.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+          p.shortDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          p.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()))
+        );
+      })
     : [];
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
-        setSearchOpen(false);
+        setIsSearchOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const scrollToCatalog = () => {
-    const el = document.getElementById('catalog-section');
-    el?.scrollIntoView({ behavior: 'smooth' });
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#121316] border-b border-[#1f2127]">
-      {/* Direct Order & Support Bar */}
-      <div className="bg-[#0b0c0f] border-b border-[#1d1f27] px-4 py-1.5 text-[11px] text-slate-300">
+    <header className="sticky top-0 z-50 w-full bg-[#0d0e13] border-b border-[#1f2129] shadow-lg font-sans">
+      
+      {/* 1. Top Bar */}
+      <div className="bg-[#08090c] border-b border-[#181920] py-1.5 px-4 text-xs text-slate-300">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center rounded bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold text-emerald-400">
-              Direct Order Available
+          <div className="flex items-center gap-4">
+            <span className="text-slate-400 hidden sm:inline">
+              RoyalCDKeys Digital Store
             </span>
-            <span className="hidden sm:inline text-slate-400">
-              Order genuine Windows keys directly via WhatsApp &amp; Email
-            </span>
-          </div>
-
-          <div className="flex items-center gap-4 text-xs">
+            <span className="text-slate-600 hidden sm:inline">|</span>
             <a
-              href="https://wa.me/15205427975?text=Hello%20RoyalCDKeys%2C%20I%20want%20to%20buy%20a%20Windows%20key"
+              href="https://wa.me/15205427975?text=Hello%20RoyalCDKeys,%20I%20want%20to%20order"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 font-bold text-[#25D366] hover:underline"
+              className="flex items-center gap-1.5 text-emerald-400 font-bold hover:underline"
             >
               <Phone className="h-3 w-3" />
               <span>WhatsApp: +1 520-542-7975</span>
             </a>
             <span className="text-slate-600 hidden md:inline">|</span>
             <a
-              href="mailto:123123xr@gmail.com?subject=Order%20Inquiry"
-              className="hidden md:flex items-center gap-1.5 font-medium text-amber-400 hover:underline"
+              href="mailto:123123xr@gmail.com"
+              className="hidden md:flex items-center gap-1.5 text-amber-400 hover:underline"
             >
               <Mail className="h-3 w-3" />
               <span>123123xr@gmail.com</span>
             </a>
           </div>
+
+          <div className="flex items-center gap-4 text-xs">
+            {/* Currency selector matching screenshot: United States USD $ */}
+            <div className="hidden sm:flex items-center gap-1 text-slate-300 font-medium">
+              <Globe className="h-3 w-3 text-slate-400" />
+              <span>United States USD $</span>
+            </div>
+            <span className="text-slate-600 hidden sm:inline">|</span>
+            <button
+              type="button"
+              onClick={onOpenAccount}
+              className="flex items-center gap-1 text-slate-300 hover:text-white cursor-pointer"
+            >
+              <User className="h-3.5 w-3.5" />
+              <span>My Account</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        
-        {/* Left: Brand Logo from Screenshot */}
-        <div className="flex items-center gap-8">
+      {/* 2. Main Store Header (Logo, Nav links matching screenshot, Search, Cart) */}
+      <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-4 sm:gap-8">
+          
+          {/* Brand Logo with User's Gold Crown Logo Photo */}
           <a
             href="#"
             onClick={(e) => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="flex items-center cursor-pointer"
+            className="shrink-0 flex items-center cursor-pointer"
           >
             <BrandLogo size="md" />
           </a>
 
-          {/* Center Navigation Links matching image.png */}
-          <nav className="hidden md:flex items-center gap-6 text-xs sm:text-sm font-semibold text-slate-300">
+          {/* Navigation Links from Screenshot: Software, Subscriptions, Bestsellers (Games removed) */}
+          <nav className="hidden md:flex items-center gap-6 text-sm font-bold text-slate-200">
             <button
               type="button"
-              onClick={scrollToCatalog}
-              className="flex items-center gap-2 hover:text-[#F5A623] transition-colors py-1"
+              onClick={() => scrollTo('software-deals-section')}
+              className="hover:text-[#F5A623] transition-colors cursor-pointer"
             >
-              <Monitor className="h-4 w-4" />
-              <span>Software</span>
+              Software
             </button>
-
             <button
               type="button"
-              onClick={scrollToCatalog}
-              className="flex items-center gap-2 hover:text-[#F5A623] transition-colors py-1"
+              onClick={() => scrollTo('subscriptions-section')}
+              className="hover:text-[#F5A623] transition-colors cursor-pointer"
             >
-              <Gamepad2 className="h-4 w-4" />
-              <span>Games</span>
+              Subscriptions
             </button>
-
             <button
               type="button"
-              onClick={scrollToCatalog}
-              className="flex items-center gap-2 hover:text-[#F5A623] transition-colors py-1"
+              onClick={() => scrollTo('catalog-section')}
+              className="hover:text-[#F5A623] transition-colors cursor-pointer"
             >
-              <Layers className="h-4 w-4" />
-              <span>Subscriptions</span>
+              Bestsellers
             </button>
-
             <button
               type="button"
-              onClick={scrollToCatalog}
-              className="flex items-center gap-2 hover:text-[#F5A623] transition-colors py-1"
+              onClick={() => scrollTo('faq-section')}
+              className="text-slate-400 hover:text-white transition-colors cursor-pointer"
             >
-              <Flame className="h-4 w-4 text-[#F5A623]" />
-              <span>Bestsellers</span>
+              FAQ
             </button>
           </nav>
-        </div>
 
-        {/* Right Section matching image.png: Search, Currency, Profile, Cart */}
-        <div className="flex items-center gap-3 sm:gap-5" ref={searchRef}>
-          
-          {/* Search trigger and input */}
-          <div className="relative">
-            {searchOpen ? (
-              <div className="flex items-center rounded-lg bg-[#1a1b22] border border-[#2d2f3d] px-2.5 py-1 text-xs sm:text-sm">
-                <Search className="h-4 w-4 text-slate-400 mr-2 shrink-0" />
+          {/* Search bar & Utility Icons */}
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+            
+            {/* Search Input matching royalcdkeys */}
+            <div className="relative" ref={searchRef}>
+              <div className="flex items-center rounded-lg border border-[#262838] bg-[#141620] overflow-hidden focus-within:border-[#F5A623]">
                 <input
                   type="text"
-                  placeholder="Search keys..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  autoFocus
-                  className="bg-transparent text-white placeholder-slate-500 focus:outline-hidden w-28 sm:w-44"
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setIsSearchOpen(true);
+                  }}
+                  onFocus={() => setIsSearchOpen(true)}
+                  placeholder="Search products..."
+                  className="w-32 sm:w-48 md:w-60 bg-transparent px-3 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-hidden"
                 />
+
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="px-1 text-slate-400 hover:text-white"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                )}
+
                 <button
                   type="button"
-                  onClick={() => setSearchOpen(false)}
-                  className="text-slate-400 hover:text-white ml-1"
+                  onClick={() => {
+                    scrollTo('catalog-section');
+                    setIsSearchOpen(false);
+                  }}
+                  className="bg-[#F5A623] hover:bg-[#e09419] text-black px-3 py-2 font-bold flex items-center justify-center transition-colors cursor-pointer"
                 >
-                  <X className="h-3.5 w-3.5" />
+                  <Search className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 </button>
               </div>
-            ) : (
-              <button
-                type="button"
-                onClick={() => setSearchOpen(true)}
-                className="text-slate-300 hover:text-white p-1 transition-colors"
-                aria-label="Search"
-              >
-                <Search className="h-4 w-4" />
-              </button>
-            )}
 
-            {/* Live Search dropdown */}
-            {searchOpen && filteredProducts.length > 0 && (
-              <div className="absolute right-0 top-full mt-2 w-72 rounded-xl border border-[#2c2f3e] bg-[#16171f] p-2 shadow-2xl z-50">
-                {filteredProducts.map((p) => (
-                  <div
-                    key={p.id}
-                    onClick={() => {
-                      onSelectProduct(p);
-                      setSearchOpen(false);
-                    }}
-                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-[#20222e] cursor-pointer transition-colors"
-                  >
-                    <img
-                      src={p.imageUrl}
-                      alt={p.title}
-                      className="h-10 w-10 rounded object-cover"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-semibold text-white truncate">{p.title}</p>
-                      <p className="text-xs font-bold text-[#F5A623]">${p.currentPrice.toFixed(2)}</p>
+              {/* Search Dropdown Results */}
+              {isSearchOpen && filteredProducts.length > 0 && (
+                <div className="absolute top-full right-0 mt-1.5 w-72 sm:w-80 rounded-xl border border-[#2d3144] bg-[#151722] shadow-2xl z-50 overflow-hidden max-h-80 overflow-y-auto">
+                  {filteredProducts.map((product) => (
+                    <div
+                      key={product.id}
+                      onClick={() => {
+                        onSelectProduct(product);
+                        setIsSearchOpen(false);
+                      }}
+                      className="flex items-center gap-3 p-3 hover:bg-[#1e2130] cursor-pointer border-b border-[#212435] last:border-b-0 transition-colors"
+                    >
+                      <img
+                        src={product.imageUrl}
+                        alt={product.title}
+                        className="h-10 w-10 rounded-md object-cover border border-[#313548] shrink-0"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-bold text-white truncate">{product.title}</p>
+                        <div className="flex items-center justify-between mt-1">
+                          <span className="text-xs font-black text-[#F5A623]">
+                            ${product.currentPrice.toFixed(2)}
+                          </span>
+                          <span className="text-[10px] text-slate-400">
+                            {product.warrantyStatus === 'guaranteed' ? 'Garanti Yes' : 'No Garanti'}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
-          {/* Currency Selector (e.g. United States USD $ v) */}
-          <div className="relative hidden sm:block">
+            {/* Shopping Cart Button */}
             <button
               type="button"
-              onClick={() => setIsCurrencyOpen(!isCurrencyOpen)}
-              className="flex items-center gap-1.5 text-xs text-slate-300 hover:text-white transition-colors"
+              onClick={onOpenCart}
+              className="flex items-center gap-2 rounded-lg bg-[#141620] border border-[#262838] px-3.5 py-2 hover:border-[#F5A623] hover:text-white transition-all cursor-pointer"
             >
-              <span>{currency}</span>
-              <ChevronDown className="h-3 w-3 text-slate-400" />
+              <div className="relative">
+                <ShoppingCart className="h-4 w-4 text-[#F5A623]" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-[10px] font-black text-white">
+                    {cartCount}
+                  </span>
+                )}
+              </div>
+              <span className="text-xs font-bold text-slate-200 hidden sm:inline">
+                Cart ({cartCount})
+              </span>
             </button>
 
-            {isCurrencyOpen && (
-              <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border border-[#2b2d3c] bg-[#171821] p-1.5 shadow-2xl z-50">
-                {currencies.map((curr) => (
-                  <button
-                    key={curr}
-                    type="button"
-                    onClick={() => {
-                      setCurrency(curr);
-                      setIsCurrencyOpen(false);
-                    }}
-                    className={`w-full text-left px-3 py-1.5 rounded-lg text-xs transition-colors ${
-                      currency === curr ? 'bg-amber-500/15 text-[#F5A623] font-bold' : 'text-slate-300 hover:bg-[#20222f]'
-                    }`}
-                  >
-                    {curr}
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
 
-          {/* Account / Vault Icon */}
-          <button
-            type="button"
-            onClick={onOpenAccount}
-            className="text-slate-300 hover:text-white p-1 transition-colors"
-            aria-label="User Account"
-          >
-            <User className="h-4 w-4" />
-          </button>
-
-          {/* Shopping Cart Icon with Badge */}
-          <button
-            type="button"
-            onClick={onOpenCart}
-            className="relative flex items-center text-slate-300 hover:text-white p-1 transition-colors"
-            aria-label="Shopping Cart"
-          >
-            <ShoppingCart className="h-4 w-4" />
-            <span className="ml-1 text-xs font-semibold text-slate-300">
-              ({cartCount})
-            </span>
-          </button>
-
         </div>
-
       </div>
+
     </header>
   );
 };

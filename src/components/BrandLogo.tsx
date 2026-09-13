@@ -25,28 +25,13 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
 
   return (
     <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
-      {/* Crown RK Emblem - Clean Vector Mark */}
-      <div className={`${iconSizes[size]} shrink-0 flex items-center justify-center`}>
-        <svg
-          viewBox="0 0 48 48"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full text-[#F5A623]"
-        >
-          {/* 5-Point Royal Crown with RK Monogram geometry */}
-          <path
-            d="M6 16L13 28L24 10L35 28L42 16L39 36H9L6 16Z"
-            fill="currentColor"
-          />
-          {/* Jewels atop crown peaks */}
-          <circle cx="6" cy="14" r="2.5" fill="currentColor" />
-          <circle cx="15" cy="24" r="1.5" fill="#141518" />
-          <circle cx="24" cy="8" r="3" fill="currentColor" />
-          <circle cx="33" cy="24" r="1.5" fill="#141518" />
-          <circle cx="42" cy="14" r="2.5" fill="currentColor" />
-          {/* Crown Base Bar */}
-          <rect x="9" y="38" width="30" height="4" rx="1.5" fill="currentColor" />
-        </svg>
+      {/* Crown RK Emblem - Using User's Uploaded Logo Photo */}
+      <div className={`${iconSizes[size]} shrink-0 overflow-hidden rounded-lg border border-[#333]`}>
+        <img
+          src="/assets/logo.jpg"
+          alt="RoyalCDKeys Logo"
+          className="w-full h-full object-cover"
+        />
       </div>
 
       {showText && (

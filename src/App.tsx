@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Product, CategoryId, CartItem, OrderConfirmation } from './types';
+import { Product, CartItem, OrderConfirmation } from './types';
 import { PRODUCTS, FAQS } from './data/mockData';
 import { Header } from './components/Header';
-import { PlatformBar } from './components/PlatformBar';
 import { HeroSection } from './components/HeroSection';
+import { PlatformBar } from './components/PlatformBar';
 import { WindowsProductShowcase } from './components/WindowsProductShowcase';
 import { WhyChooseUs } from './components/WhyChooseUs';
 import { FaqSection } from './components/FaqSection';
@@ -25,12 +25,12 @@ export default function App() {
   const [isBlueprintOpen, setIsBlueprintOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
 
-  // Cart state - initialized with Windows 11 Pro
+  // Cart state initialized with Windows 11 Pro
   const [cartItems, setCartItems] = useState<CartItem[]>([
     { product: PRODUCTS[0], quantity: 1 },
   ]);
 
-  // Orders state for Customer License Vault
+  // Orders state
   const [recentOrders, setRecentOrders] = useState<OrderConfirmation[]>([]);
 
   // Cart Handlers
@@ -77,76 +77,61 @@ export default function App() {
 
   const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
-  // Filter products by platform tag if user clicks top bar
-  const displayedProducts = products.filter((p) => {
-    if (selectedPlatform === 'all') return true;
-    if (selectedPlatform === 'windows') return p.categoryId === 'windows';
-    if (selectedPlatform === 'office') return p.categoryId === 'office';
-    if (selectedPlatform === 'subscription') return p.categoryId === 'subscription';
-    if (selectedPlatform === 'software') return true;
-    if (selectedPlatform === 'win11') return p.tags.includes('Windows 11');
-    if (selectedPlatform === 'win10') return p.tags.includes('Windows 10');
-    return true;
-  });
-
   return (
-    <div className="min-h-screen bg-[#0a0b0f] text-slate-100 font-sans antialiased selection:bg-amber-400 selection:text-black">
+    <div className="min-h-screen bg-[#090a0d] text-slate-100 font-sans antialiased selection:bg-[#F5A623] selection:text-black">
       
-      {/* 1. Header Navbar */}
+      {/* 1. Store Header matching RoyalCDKeys */}
       <Header
         cartCount={totalCartCount}
         onOpenCart={() => setIsCartOpen(true)}
         onOpenBlueprint={() => setIsBlueprintOpen(true)}
-        onSelectCategory={() => {
-          setSelectedPlatform('all');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+        onSelectCategory={(category) => {
+          setSelectedPlatform(category);
+          const el = document.getElementById('catalog-section');
+          el?.scrollIntoView({ behavior: 'smooth' });
         }}
         products={products}
         onSelectProduct={(p) => setSelectedProduct(p)}
         onOpenAccount={() => setIsAccountOpen(true)}
-        selectedCategory="all"
-      />
-
-      {/* 2. Platform Bar with Windows Editions & Guarantees */}
-      <PlatformBar
-        selectedPlatform={selectedPlatform}
-        onSelectPlatform={(platform) => {
-          setSelectedPlatform(platform);
-          const el = document.getElementById('catalog-section');
-          el?.scrollIntoView({ behavior: 'smooth' });
-        }}
+        selectedCategory={selectedPlatform}
       />
 
       <main>
-        {/* 3. Hero Section matching reference */}
+        {/* 2. Hero Banner matching screenshot (Windows 11 & Office 2024) */}
         <HeroSection
           onShopClick={() => {
-            const el = document.getElementById('catalog-section');
+            const el = document.getElementById('software-deals-section');
             el?.scrollIntoView({ behavior: 'smooth' });
           }}
           onSelectProduct={(p) => setSelectedProduct(p)}
           products={products}
         />
 
-        {/* 4. The 2 Flagship Windows Operating System Products */}
+        {/* 3. Platform Bar (Windows, Office, Software, Subscriptions) - No Games */}
+        <PlatformBar
+          selectedPlatform={selectedPlatform}
+          onSelectPlatform={(platform) => setSelectedPlatform(platform)}
+        />
+
+        {/* 4. Main Catalog: Top Software Deals, Creative Software, Top Subscription Deals */}
         <WindowsProductShowcase
-          products={displayedProducts}
+          products={products}
           onAddToCart={handleAddToCart}
           onInstantBuy={handleInstantBuy}
           onQuickView={(p) => setSelectedProduct(p)}
         />
 
-        {/* 5. Trust & Architectural Transparency */}
+        {/* 5. Why Choose RoyalCDKeys & Warranty Transparency */}
         <WhyChooseUs />
 
-        {/* 6. Frequently Asked Questions Accordion */}
+        {/* 6. Frequently Asked Questions (Exact 10 questions from screenshot) */}
         <FaqSection
           faqs={FAQS}
           onLearnMore={() => setIsBlueprintOpen(true)}
         />
       </main>
 
-      {/* 7. Store Footer */}
+      {/* 7. Store Footer (Exact 4 columns from screenshot) */}
       <Footer
         onSelectCategory={() => {
           setSelectedPlatform('all');
@@ -175,7 +160,7 @@ export default function App() {
         onCheckout={() => setIsCheckoutOpen(true)}
       />
 
-      {/* Instant Checkout & Cryptographic Key Dispatch Modal */}
+      {/* Instant Checkout Modal */}
       <CheckoutModal
         isOpen={isCheckoutOpen}
         onClose={() => setIsCheckoutOpen(false)}
@@ -183,7 +168,7 @@ export default function App() {
         onOrderCompleted={handleOrderCompleted}
       />
 
-      {/* Enterprise Architecture Blueprint Modal */}
+      {/* Architecture Blueprint Modal */}
       <ArchitectureModal
         isOpen={isBlueprintOpen}
         onClose={() => setIsBlueprintOpen(false)}

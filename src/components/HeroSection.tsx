@@ -1,5 +1,6 @@
 import React from 'react';
 import { Product } from '../types';
+import { ShoppingCart, Phone, Check, ShieldCheck, Zap } from 'lucide-react';
 
 interface HeroSectionProps {
   onShopClick: () => void;
@@ -12,98 +13,160 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onSelectProduct,
   products,
 }) => {
-  const win11 = products.find((p) => p.id === 'win-11-pro-retail') || products[0];
-  const officeProduct = products.find((p) => p.id === 'office-2024-pro') || products[3] || products[0];
+  const win11 = products.find((p) => p.id === 'win-11-pro-retail');
+  const netflix = products.find((p) => p.id === 'netflix-premium');
+  const spotify = products.find((p) => p.id === 'spotify-premium');
 
   return (
-    <section className="w-full bg-[#121316] py-5 sm:py-6 px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full bg-[#0b0c10] py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+        {/* Main Hero Card exactly matching image.png */}
+        <div className="relative overflow-hidden rounded-2xl border border-[#232635] bg-[#11131a] shadow-2xl min-h-[340px] sm:min-h-[400px] flex items-center">
           
-          {/* Left Banner: Windows 11 & Office 2024 (matching screenshot) */}
+          {/* Background Image using user's exact hero-banner.jpg */}
           <div
-            onClick={onShopClick}
-            className="lg:col-span-7 group relative overflow-hidden rounded-2xl border border-[#232635] bg-[#0c101a] min-h-[260px] sm:min-h-[320px] p-6 sm:p-10 flex flex-col justify-between cursor-pointer transition-all hover:border-[#383d54]"
-          >
-            {/* Background Graphic */}
-            <div className="absolute inset-0 z-0">
-              <img
-                src="/assets/win11-hero-card.jpg"
-                alt="Buy Windows 11 &amp; Office 2024 CD Keys"
-                className="h-full w-full object-cover object-right opacity-90 transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#070b14] via-[#070b14]/85 to-transparent" />
+            className="absolute inset-0 bg-cover bg-right sm:bg-center"
+            style={{
+              backgroundImage: `url('/assets/hero-banner.jpg')`,
+            }}
+          />
+          {/* Subtle dark gradient overlay to ensure perfect contrast on text */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0d0e14] via-[#0d0e14]/85 to-[#0d0e14]/40" />
+
+          {/* Foreground Hero Content */}
+          <div className="relative z-10 max-w-2xl p-6 sm:p-10 lg:p-12">
+            {/* Top pill badge */}
+            <div className="inline-flex items-center gap-2 rounded-full bg-[#1c1f2c]/90 border border-[#2e3347] px-3 py-1 text-xs font-bold text-slate-300 mb-4">
+              <Zap className="h-3.5 w-3.5 text-[#F5A623]" />
+              <span>Automated Digital Delivery in &lt; 60s</span>
             </div>
 
-            {/* Banner Content */}
-            <div className="relative z-10 max-w-md">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-xs font-semibold uppercase tracking-wider text-blue-400">
-                  Microsoft Operating Systems &amp; Software
-                </span>
-              </div>
-              <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                Buy Windows 11, Windows 10 &amp; Office 2024 CD Keys
-              </h1>
-              <p className="mt-2 text-sm sm:text-base text-slate-300 font-normal">
-                Official Microsoft digital retail licenses. Lifetime activation &amp; instant delivery from $4.82.
-              </p>
+            {/* Headline matching screenshot */}
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+              Windows 11 &amp; Office 2024
+            </h1>
+
+            {/* Subtitle matching screenshot */}
+            <p className="mt-3 text-base sm:text-lg text-slate-300 font-medium leading-relaxed">
+              Choose your license. Activate instantly.
+            </p>
+
+            {/* Warranty summary pills */}
+            <div className="mt-5 flex flex-wrap gap-2.5 text-xs">
+              <span className="inline-flex items-center gap-1.5 rounded-lg bg-[#112419]/90 border border-emerald-500/40 px-3 py-1.5 font-bold text-emerald-300">
+                <Check className="h-3.5 w-3.5 text-emerald-400" />
+                <span>Netflix 4K ($1.99) - Garanti Yes</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-lg bg-[#261e12]/90 border border-amber-500/40 px-3 py-1.5 font-bold text-amber-300">
+                <ShieldCheck className="h-3.5 w-3.5 text-amber-400" />
+                <span>Windows Keys &amp; Spotify ($2.99) - No Garanti</span>
+              </span>
             </div>
 
-            <div className="relative z-10 pt-6">
+            {/* Action buttons matching screenshot */}
+            <div className="mt-7 flex flex-wrap items-center gap-3.5">
               <button
                 type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onShopClick();
-                }}
-                className="inline-flex items-center justify-center rounded-lg bg-[#F5A623] hover:bg-[#e09419] px-6 py-2.5 text-sm font-bold text-black transition-colors shadow-lg shadow-black/30 cursor-pointer"
+                onClick={onShopClick}
+                className="rounded-lg bg-[#F5A623] hover:bg-[#e09419] px-7 py-3 text-sm sm:text-base font-black text-black shadow-lg transition-colors cursor-pointer"
               >
-                Shop Deals
+                Shop Now
               </button>
+
+              <a
+                href="https://wa.me/15205427975?text=Hello%20RoyalCDKeys,%20I%20want%20to%20order"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg bg-[#14231b] hover:bg-[#1a2e23] border border-emerald-500/50 px-5 py-3 text-sm font-bold text-emerald-400 transition-colors cursor-pointer"
+              >
+                <Phone className="h-4 w-4" />
+                <span>WhatsApp: +1 520-542-7975</span>
+              </a>
             </div>
           </div>
-
-          {/* Right Banner: Microsoft Office 2024 (matching screenshot) */}
-          <div
-            onClick={() => {
-              if (officeProduct) onSelectProduct(officeProduct);
-            }}
-            className="lg:col-span-5 group relative overflow-hidden rounded-2xl border border-[#232635] bg-[#161720] min-h-[260px] sm:min-h-[320px] p-6 sm:p-8 flex flex-col justify-between cursor-pointer transition-all hover:border-[#383d54]"
-          >
-            {/* Background Graphic */}
-            <div className="absolute inset-0 z-0">
-              <img
-                src="/assets/office-2024-pro.jpg"
-                alt="Office 2024 Professional Plus"
-                className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#101117] via-transparent to-transparent opacity-80" />
-            </div>
-
-            <div className="relative z-10">
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#F5A623]">
-                Professional Suite
-              </span>
-              <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight mt-1">
-                Office 2024
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-300">
-                Professional Plus Lifetime License
-              </p>
-            </div>
-
-            <div className="relative z-10 flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-300">
-                Official Digital Download
-              </span>
-              <span className="text-xs font-bold text-[#F5A623] group-hover:underline">
-                View Details &rarr;
-              </span>
-            </div>
-          </div>
-
         </div>
+
+        {/* Quick Highlights Row for Windows, Netflix, Spotify */}
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {win11 && (
+            <div
+              onClick={() => onSelectProduct(win11)}
+              className="flex items-center gap-3 p-3 rounded-xl bg-[#13151e] border border-[#232635] hover:border-[#F5A623] cursor-pointer transition-colors"
+            >
+              <img
+                src={win11.imageUrl}
+                alt={win11.title}
+                className="h-14 w-14 rounded-lg object-cover border border-[#2d3144] shrink-0"
+              />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-sky-400 uppercase">Windows Key</span>
+                  <span className="text-[10px] font-bold text-amber-300 bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-500/30">
+                    No Garanti
+                  </span>
+                </div>
+                <p className="text-xs font-bold text-white truncate mt-0.5">{win11.title}</p>
+                <div className="flex items-baseline gap-2 mt-1">
+                  <span className="text-sm font-black text-[#F5A623]">${win11.currentPrice.toFixed(2)}</span>
+                  <span className="text-[11px] text-slate-500 line-through">${win11.originalPrice.toFixed(2)}</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {netflix && (
+            <div
+              onClick={() => onSelectProduct(netflix)}
+              className="flex items-center gap-3 p-3 rounded-xl bg-[#13151e] border border-[#232635] hover:border-[#F5A623] cursor-pointer transition-colors"
+            >
+              <img
+                src={netflix.imageUrl}
+                alt={netflix.title}
+                className="h-14 w-14 rounded-lg object-cover border border-[#2d3144] shrink-0"
+              />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-red-400 uppercase">Streaming</span>
+                  <span className="text-[10px] font-bold text-emerald-300 bg-emerald-400/10 px-1.5 py-0.5 rounded border border-emerald-500/30">
+                    Garanti Yes
+                  </span>
+                </div>
+                <p className="text-xs font-bold text-white truncate mt-0.5">{netflix.title}</p>
+                <div className="flex items-baseline gap-2 mt-1">
+                  <span className="text-sm font-black text-[#F5A623]">${netflix.currentPrice.toFixed(2)}</span>
+                  <span className="text-[11px] text-slate-500 line-through">${netflix.originalPrice.toFixed(2)}</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {spotify && (
+            <div
+              onClick={() => onSelectProduct(spotify)}
+              className="flex items-center gap-3 p-3 rounded-xl bg-[#13151e] border border-[#232635] hover:border-[#F5A623] cursor-pointer transition-colors"
+            >
+              <img
+                src={spotify.imageUrl}
+                alt={spotify.title}
+                className="h-14 w-14 rounded-lg object-cover border border-[#2d3144] shrink-0"
+              />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-emerald-400 uppercase">Streaming</span>
+                  <span className="text-[10px] font-bold text-amber-300 bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-500/30">
+                    No Garanti
+                  </span>
+                </div>
+                <p className="text-xs font-bold text-white truncate mt-0.5">{spotify.title}</p>
+                <div className="flex items-baseline gap-2 mt-1">
+                  <span className="text-sm font-black text-[#F5A623]">${spotify.currentPrice.toFixed(2)}</span>
+                  <span className="text-[11px] text-slate-500 line-through">${spotify.originalPrice.toFixed(2)}</span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
       </div>
     </section>
   );

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Product } from '../types';
-import { ShoppingCart, Check, ShieldCheck, Download, Star, Sparkles } from 'lucide-react';
+import { ProductCardRoyal } from './ProductCardRoyal';
 import { ProductLeadForm } from './ProductLeadForm';
+import { Check, ShieldCheck, Zap, ArrowRight } from 'lucide-react';
 
 interface WindowsProductShowcaseProps {
   products: Product[];
@@ -16,217 +17,211 @@ export const WindowsProductShowcase: React.FC<WindowsProductShowcaseProps> = ({
   onInstantBuy,
   onQuickView,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  // Top Software Deals (First 10 products from mockData)
+  const softwareDeals = products.slice(0, 10);
 
-  const categories = [
-    { id: 'all', label: 'All Software Deals', count: products.length },
-    { id: 'windows', label: 'Windows OS', count: products.filter(p => p.categoryId === 'windows').length },
-    { id: 'office', label: 'Office Suites', count: products.filter(p => p.categoryId === 'office').length },
-    { id: 'subscription', label: 'Microsoft 365', count: products.filter(p => p.categoryId === 'subscription').length },
-  ];
+  // Creative & Productivity Software (Next 10 products)
+  const creativeSoftware = products.slice(10, 20);
 
-  const filteredProducts = selectedCategory === 'all'
-    ? products
-    : products.filter((p) => p.categoryId === selectedCategory);
+  // Top Subscription Deals (Next 8 products, including Gemini Advanced, Netflix, Spotify, Crunchyroll)
+  const subscriptionDeals = products.slice(20, 28);
+
+  const [expandedSection, setExpandedSection] = useState<{ [key: string]: boolean }>({
+    software: false,
+    creative: false,
+    subscriptions: false,
+  });
+
+  const toggleSection = (section: string) => {
+    setExpandedSection((prev) => ({ ...prev, [section]: !prev[section] }));
+  };
 
   return (
-    <section id="catalog-section" className="w-full bg-[#121316] py-10 sm:py-14 border-b border-[#1f2127]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Heading with SEO-optimized h2 */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
-          <div>
-            <div className="flex items-center gap-2 mb-1.5">
-              <Sparkles className="h-4 w-4 text-[#F5A623]" />
-              <span className="text-xs font-bold uppercase tracking-wider text-[#F5A623]">
-                Verified Digital Licenses
-              </span>
+    <div id="catalog-section" className="w-full bg-[#0b0c10] py-8 sm:py-12">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-14 sm:space-y-20">
+
+        {/* ============================================================== */}
+        {/* SECTION 1: TOP SOFTWARE DEALS (Exact match from screenshot)    */}
+        {/* ============================================================== */}
+        <section id="software-deals-section" className="scroll-mt-24">
+          <div className="flex items-center justify-between mb-5 sm:mb-6 border-b border-[#1f222e] pb-3">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                Top Software Deals
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Genuine OEM &amp; Retail Microsoft Windows licenses &amp; Office suites
+              </p>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              Top Software Deals &amp; Digital CD Keys
-            </h2>
-            <p className="mt-1 text-xs sm:text-sm text-slate-400">
-              Genuine Microsoft retail licenses with instant digital delivery, lifetime validity &amp; transfer rights.
-            </p>
+            <span className="text-xs font-bold text-[#F5A623] bg-[#F5A623]/10 px-2.5 py-1 rounded border border-[#F5A623]/30">
+              Save up to 98%
+            </span>
           </div>
 
-          {/* Category Filter Tabs */}
-          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[#1a1b22] border border-[#262835] overflow-x-auto max-w-full">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`whitespace-nowrap px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  selectedCategory === cat.id
-                    ? 'bg-[#F5A623] text-black shadow'
-                    : 'text-slate-300 hover:text-white hover:bg-[#252733]'
-                }`}
-              >
-                {cat.label} ({cat.count})
-              </button>
+          {/* 5 columns on large screens matching screenshot */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+            {(expandedSection.software ? softwareDeals : softwareDeals.slice(0, 10)).map((product) => (
+              <ProductCardRoyal
+                key={product.id}
+                product={product}
+                onAddToCart={onAddToCart}
+                onInstantBuy={onInstantBuy}
+                onQuickView={onQuickView}
+              />
             ))}
           </div>
-        </div>
 
-        {/* Product Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
-          {filteredProducts.map((product) => {
-            const discount = product.discountPercent ?? Math.round(
-              ((product.originalPrice - product.currentPrice) / product.originalPrice) * 100
-            );
+          {/* View All Button */}
+          <div className="mt-8 flex justify-center">
+            <button
+              type="button"
+              onClick={() => toggleSection('software')}
+              className="rounded-lg border border-[#2b2f40] bg-[#141620] hover:bg-[#1d202e] hover:border-[#F5A623] px-8 py-2.5 text-xs sm:text-sm font-bold text-white transition-colors cursor-pointer"
+            >
+              {expandedSection.software ? 'Show Less' : 'View All'}
+            </button>
+          </div>
+        </section>
 
-            return (
-              <div
+        {/* ============================================================== */}
+        {/* SECTION 2: CREATIVE & PRODUCTIVITY SOFTWARE (from screenshot)  */}
+        {/* ============================================================== */}
+        <section id="creative-software-section" className="scroll-mt-24">
+          <div className="flex items-center justify-between mb-5 sm:mb-6 border-b border-[#1f222e] pb-3">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                Creative &amp; Productivity Software
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Utilities, security, PDF editors, backup solutions, and Mac compatibility
+              </p>
+            </div>
+          </div>
+
+          {/* 5 columns on large screens */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+            {(expandedSection.creative ? creativeSoftware : creativeSoftware.slice(0, 10)).map((product) => (
+              <ProductCardRoyal
                 key={product.id}
-                onClick={() => onQuickView(product)}
-                className="group relative flex flex-col justify-between rounded-2xl border border-[#262835] bg-[#1a1b22] p-3.5 transition-all hover:border-[#3d4154] hover:bg-[#1e2028] cursor-pointer shadow-md"
-              >
-                <div>
-                  {/* Square Product Image */}
-                  <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-[#0e1017]">
-                    <img
-                      src={product.imageUrl}
-                      alt={product.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    <div className="absolute top-2 left-2 rounded bg-black/70 backdrop-blur-xs px-2 py-0.5 text-[10px] font-bold text-amber-400 border border-amber-500/30">
-                      {product.licenseType}
-                    </div>
-                  </div>
+                product={product}
+                onAddToCart={onAddToCart}
+                onInstantBuy={onInstantBuy}
+                onQuickView={onQuickView}
+              />
+            ))}
+          </div>
 
-                  {/* Product Title */}
-                  <h3 className="mt-3 text-sm font-semibold text-white line-clamp-2 leading-snug group-hover:text-[#F5A623] transition-colors">
-                    {product.title}
-                  </h3>
+          {/* View All Button */}
+          <div className="mt-8 flex justify-center">
+            <button
+              type="button"
+              onClick={() => toggleSection('creative')}
+              className="rounded-lg border border-[#2b2f40] bg-[#141620] hover:bg-[#1d202e] hover:border-[#F5A623] px-8 py-2.5 text-xs sm:text-sm font-bold text-white transition-colors cursor-pointer"
+            >
+              {expandedSection.creative ? 'Show Less' : 'View All'}
+            </button>
+          </div>
+        </section>
 
-                  {/* Platform & Rating Pill */}
-                  <div className="mt-2.5 flex items-center justify-between gap-2">
-                    <span className="inline-flex items-center gap-1.5 rounded bg-[#242633] px-2 py-0.5 text-[11px] font-medium text-slate-300">
-                      <svg className="h-3 w-3 text-slate-300" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801" />
-                      </svg>
-                      <span>{product.platformTag || product.platform}</span>
-                    </span>
+        {/* ============================================================== */}
+        {/* SECTION 3: TOP SUBSCRIPTION DEALS (from screenshot & uploads)   */}
+        {/* ============================================================== */}
+        <section id="subscriptions-section" className="scroll-mt-24">
+          <div className="flex items-center justify-between mb-5 sm:mb-6 border-b border-[#1f222e] pb-3">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                Top Subscription Deals
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Netflix 4K (Garanti Yes), Spotify Premium (No Garanti), Gemini Advanced &amp; Crunchyroll
+              </p>
+            </div>
+            <span className="text-xs font-bold text-emerald-400 bg-emerald-950/80 px-2.5 py-1 rounded border border-emerald-500/30">
+              Netflix Garanti Yes
+            </span>
+          </div>
 
-                    <div className="flex items-center text-amber-400 text-xs font-semibold">
-                      <Star className="h-3.5 w-3.5 fill-current" />
-                      <span className="ml-1 text-slate-200">{product.rating.toFixed(1)}</span>
-                    </div>
-                  </div>
+          {/* 5 columns on large screens */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+            {subscriptionDeals.map((product) => (
+              <ProductCardRoyal
+                key={product.id}
+                product={product}
+                onAddToCart={onAddToCart}
+                onInstantBuy={onInstantBuy}
+                onQuickView={onQuickView}
+              />
+            ))}
+          </div>
 
-                  {/* Pricing Row */}
-                  <div className="mt-3 flex items-baseline gap-2">
-                    <span className="text-lg font-extrabold text-white">
-                      ${product.currentPrice.toFixed(2)}
-                    </span>
-                    <span className="rounded bg-[#F5A623] px-1.5 py-0.5 text-[10px] font-extrabold text-black">
-                      -{discount}%
-                    </span>
+          {/* View All Button */}
+          <div className="mt-8 flex justify-center">
+            <button
+              type="button"
+              onClick={() => toggleSection('subscriptions')}
+              className="rounded-lg border border-[#2b2f40] bg-[#141620] hover:bg-[#1d202e] hover:border-[#F5A623] px-8 py-2.5 text-xs sm:text-sm font-bold text-white transition-colors cursor-pointer"
+            >
+              {expandedSection.subscriptions ? 'Show Less' : 'View All'}
+            </button>
+          </div>
+        </section>
+
+        {/* ============================================================== */}
+        {/* SECTION 4: WARRANTY TERMS & LEAD ORDER DISPATCH                */}
+        {/* ============================================================== */}
+        <section className="rounded-2xl border border-[#252838] bg-[#11131c] p-6 sm:p-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            {/* Left Column: Clear Warranty Transparency */}
+            <div className="lg:col-span-6 space-y-4">
+              <div className="inline-flex items-center gap-2 rounded-md bg-[#191c28] px-3 py-1 text-xs font-bold text-[#F5A623] border border-[#2b2f42]">
+                <Zap className="h-3.5 w-3.5" />
+                <span>Transparent Wholesale Terms</span>
+              </div>
+
+              <h3 className="text-xl sm:text-2xl font-extrabold text-white">
+                Warranty &amp; Activation Guarantee Policy
+              </h3>
+
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                RoyalCDKeys operates transparently so you know exactly what is covered prior to ordering:
+              </p>
+
+              <div className="space-y-3 pt-2">
+                <div className="rounded-xl border border-emerald-500/40 bg-[#122319] p-3.5">
+                  <div className="flex items-center gap-2 text-emerald-400 font-extrabold text-sm">
+                    <Check className="h-4 w-4 shrink-0" />
+                    <span>Netflix Premium 4K UHD ($1.99) - Garanti Yes</span>
                   </div>
-                  <div className="text-xs text-slate-500 line-through">
-                    ${product.originalPrice.toFixed(2)}
-                  </div>
+                  <p className="text-xs text-emerald-300/80 mt-1 pl-6">
+                    Full 100% replacement warranty included throughout your subscription period. If credentials expire or reset, you receive instant replacement on WhatsApp.
+                  </p>
                 </div>
 
-                {/* Quick Action Buttons */}
-                <div className="mt-4 pt-3 border-t border-[#252736] flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onInstantBuy(product);
-                    }}
-                    className="flex-1 rounded-lg bg-[#F5A623] hover:bg-[#e09419] py-2 text-center text-xs font-bold text-black transition-colors cursor-pointer"
-                  >
-                    Buy Now
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onAddToCart(product);
-                    }}
-                    className="rounded-lg border border-[#303346] bg-[#222432] hover:bg-[#2c2f42] p-2 text-slate-200 transition-colors cursor-pointer"
-                    aria-label="Add to cart"
-                    title="Add to cart"
-                  >
-                    <ShoppingCart className="h-4 w-4" />
-                  </button>
+                <div className="rounded-xl border border-amber-500/40 bg-[#251f14] p-3.5">
+                  <div className="flex items-center gap-2 text-amber-300 font-extrabold text-sm">
+                    <ShieldCheck className="h-4 w-4 shrink-0" />
+                    <span>Windows 11 / 10 Keys &amp; Spotify ($2.99) - No Garanti</span>
+                  </div>
+                  <p className="text-xs text-amber-300/80 mt-1 pl-6">
+                    Offered at direct rock-bottom liquidation wholesale rates with single activation guarantee. Sold without extended replacement warranty (Sans Garantie).
+                  </p>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </div>
 
-        {/* Instant Lead / Direct Order Form */}
-        <div className="mt-14 max-w-2xl mx-auto">
-          <ProductLeadForm
-            defaultProduct="Windows 11 Pro"
-            title="Direct Order &amp; License Request"
-            subtitle="Choose your product or operating system version and enter your email for immediate processing."
-          />
-        </div>
+            {/* Right Column: Instant Lead & WhatsApp Order Form */}
+            <div className="lg:col-span-6">
+              <ProductLeadForm
+                products={products}
+                onOrderCreated={(prod) => onInstantBuy(prod)}
+              />
+            </div>
 
-        {/* Technical Specification Matrix (Clean, professional, high-trust) */}
-        <div className="mt-14 pt-10 border-t border-[#1f2127]">
-          <div className="mb-6">
-            <h3 className="text-lg font-bold text-white">Technical Comparison: Windows 11 Pro vs. Windows 10 Pro</h3>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1">Both keys are 100% genuine Microsoft Retail licenses with lifetime validity and transfer rights.</p>
           </div>
-
-          <div className="overflow-x-auto rounded-xl border border-[#252735] bg-[#161720]">
-            <table className="w-full text-left text-xs sm:text-sm">
-              <thead className="border-b border-[#252735] bg-[#1b1d27] text-slate-300 font-semibold">
-                <tr>
-                  <th className="py-3.5 px-4">Feature / Specification</th>
-                  <th className="py-3.5 px-4 text-[#F5A623]">Windows 11 Pro ($5.43)</th>
-                  <th className="py-3.5 px-4 text-slate-200">Windows 10 Pro ($4.82)</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#232534] text-slate-300">
-                <tr>
-                  <td className="py-3 px-4 font-medium text-white">License Model</td>
-                  <td className="py-3 px-4 font-semibold text-[#F5A623]">Retail (Transferable to new PC)</td>
-                  <td className="py-3 px-4 font-semibold text-slate-300">Retail (Transferable to new PC)</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4 font-medium text-white">BitLocker Encryption</td>
-                  <td className="py-3 px-4 text-emerald-400 font-semibold">Full 256-Bit Support</td>
-                  <td className="py-3 px-4 text-emerald-400 font-semibold">Full 256-Bit Support</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4 font-medium text-white">Virtualization (Hyper-V &amp; Sandbox)</td>
-                  <td className="py-3 px-4 text-emerald-400 font-semibold">Included</td>
-                  <td className="py-3 px-4 text-emerald-400 font-semibold">Included</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4 font-medium text-white">Remote Desktop (Host &amp; Client)</td>
-                  <td className="py-3 px-4 text-emerald-400 font-semibold">Included</td>
-                  <td className="py-3 px-4 text-emerald-400 font-semibold">Included</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4 font-medium text-white">Hardware Requirements</td>
-                  <td className="py-3 px-4">TPM 2.0 &amp; UEFI Secure Boot</td>
-                  <td className="py-3 px-4">Standard 1 GHz 64-bit / 32-bit</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4 font-medium text-white">Official Media Download</td>
-                  <td className="py-3 px-4 font-mono text-xs">Direct Microsoft Media Creation Tool</td>
-                  <td className="py-3 px-4 font-mono text-xs">Direct Microsoft Media Creation Tool</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4 font-medium text-white">Activation Handshake</td>
-                  <td className="py-3 px-4">Direct Microsoft Server Validation</td>
-                  <td className="py-3 px-4">Direct Microsoft Server Validation</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        </section>
 
       </div>
-    </section>
+    </div>
   );
 };
