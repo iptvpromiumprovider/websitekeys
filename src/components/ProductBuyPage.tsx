@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   ShoppingCart,
   Phone,
+  Mail,
   Zap,
   ShieldCheck,
   Check,
@@ -39,8 +40,8 @@ export const ProductBuyPage: React.FC<ProductBuyPageProps> = ({
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<'description' | 'activation' | 'requirements' | 'warranty'>('description');
   const [customerEmail, setCustomerEmail] = useState('');
-  const [customerPhone, setCustomerPhone] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState<'card' | 'paypal' | 'crypto' | 'whatsapp'>('whatsapp');
+  const [orderNote, setOrderNote] = useState('');
+  const [orderChannel, setOrderChannel] = useState<'whatsapp' | 'telegram'>('whatsapp');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [successOrder, setSuccessOrder] = useState<OrderConfirmation | null>(null);
@@ -48,6 +49,10 @@ export const ProductBuyPage: React.FC<ProductBuyPageProps> = ({
 
   const WHATSAPP_NUMBER = '15205427975';
   const WHATSAPP_DISPLAY = '+1 520-542-7975';
+  const TELEGRAM_HANDLE = '@bigovv';
+  const TELEGRAM_LINK = 'https://t.me/bigovv';
+  const GOOGLE_SCRIPT_URL =
+    'https://script.google.com/macros/s/AKfycby0_aceIACtHWDgJh8gFugRCDwJChdQp6LPH0rOLzggcHPG48u1O-usTpx3adxA2YU2gA/exec';
 
   const totalPrice = product.currentPrice * quantity;
   const savings = (product.originalPrice - product.currentPrice) * quantity;
@@ -61,12 +66,18 @@ export const ProductBuyPage: React.FC<ProductBuyPageProps> = ({
     .slice(0, 4);
 
   const handleWhatsAppDirect = () => {
-    const message = `Hello RoyalCDKeys! I want to purchase:\n- ${quantity}x ${product.title} ($${totalPrice.toFixed(2)} USD)\nSKU: ${product.sku}\nPlatform: ${product.platformTag || product.platform}\n${customerEmail ? `My Email: ${customerEmail}\n` : ''}Please send payment details and instant activation instructions.`;
+    const message = `Hello RoyalCDKeys! I want to purchase:\n- ${quantity}x ${product.title} ($${totalPrice.toFixed(2)} USD)\nSKU: ${product.sku}\nPlatform: ${product.platformTag || product.platform}\n${customerEmail.trim() ? `My Email: ${customerEmail.trim()}\n` : ''}${orderNote.trim() ? `Note: ${orderNote.trim()}\n` : ''}Please send key and payment instructions.`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  const handleFormOrder = (e: React.FormEvent) => {
+  const handleTelegramDirect = () => {
+    const message = `Hello @bigovv! I want to purchase:\n- ${quantity}x ${product.title} ($${totalPrice.toFixed(2)} USD)\nSKU: ${product.sku}\nPlatform: ${product.platformTag || product.platform}\n${customerEmail.trim() ? `My Email: ${customerEmail.trim()}\n` : ''}${orderNote.trim() ? `Note: ${orderNote.trim()}\n` : ''}Please send key and payment instructions.`;
+    const url = `https://t.me/bigovv?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleFormOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!customerEmail.trim()) {
       alert('Please enter your email address for key delivery.');
@@ -75,33 +86,53 @@ export const ProductBuyPage: React.FC<ProductBuyPageProps> = ({
 
     setIsSubmitting(true);
 
-    // Simulate order generation with genuine key
-    setTimeout(() => {
-      const generatedKey = `W269N-WFGWX-YVC9B-4J6C9-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
-      const newOrder: OrderConfirmation = {
-        orderId: `RCK-${Date.now().toString().slice(-6)}`,
-        customerEmail: customerEmail,
-        items: [{ product, quantity }],
-        total: totalPrice,
-        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-        licenseKeys: [
-          {
-            productId: product.id,
-            productTitle: product.title,
-            key: product.category === 'subscriptions' ? 'Credentials sent via WhatsApp & Email' : generatedKey,
-            downloadUrl: 'https://setup.office.com',
-          },
-        ],
-      };
+    try {
+      // Submit directly to Google Sheet webhook
+      const data = new URLSearchParams();
+      data.append('email', customerEmail.trim());
+      data.append(
+        'tool',
+        `${quantity}x ${product.title} ($${totalPrice.toFixed(2)} USD) - Channel: ${
+          orderChannel === 'telegram' ? 'Telegram @bigovv' : 'WhatsApp'
+        }${orderNote.trim() ? ` | Request: ${orderNote.trim()}` : ''}`
+      );
 
-      setSuccessOrder(newOrder);
-      setOrderSuccess(true);
-      setIsSubmitting(false);
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        body: data,
+        mode: 'no-cors',
+      });
+    } catch (err) {
+      console.error('Google Sheet submission notice:', err);
+    }
 
-      if (onOrderCompleted) {
-        onOrderCompleted(newOrder);
-      }
-    }, 900);
+    // Generate order confirmation
+    const generatedKey = `W269N-WFGWX-YVC9B-4J6C9-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+    const newOrder: OrderConfirmation = {
+      orderId: `RCK-${Date.now().toString().slice(-6)}`,
+      customerEmail: customerEmail.trim(),
+      items: [{ product, quantity }],
+      total: totalPrice,
+      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      licenseKeys: [
+        {
+          productId: product.id,
+          productTitle: product.title,
+          key: product.category === 'subscriptions' || product.category === 'streaming'
+            ? 'Credentials sent via Email & WhatsApp/Telegram'
+            : generatedKey,
+          downloadUrl: 'https://setup.office.com',
+        },
+      ],
+    };
+
+    setSuccessOrder(newOrder);
+    setOrderSuccess(true);
+    setIsSubmitting(false);
+
+    if (onOrderCompleted) {
+      onOrderCompleted(newOrder);
+    }
   };
 
   return (
@@ -362,24 +393,35 @@ export const ProductBuyPage: React.FC<ProductBuyPageProps> = ({
               </div>
             </div>
 
-            {/* Quick Action Buttons */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {/* Quick Action Buttons: WhatsApp & Telegram @bigovv & Add to Cart */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
               <button
                 type="button"
                 onClick={handleWhatsAppDirect}
-                className="flex items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] py-3.5 px-4 text-sm font-extrabold text-black transition-all shadow-lg shadow-[#25D366]/10 active:scale-99 cursor-pointer"
+                className="flex items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] py-3.5 px-3 text-xs sm:text-sm font-extrabold text-black transition-all shadow-lg shadow-[#25D366]/15 active:scale-99 cursor-pointer"
               >
                 <Phone className="h-4 w-4 stroke-[2.5]" />
-                <span>Buy via WhatsApp (+1 520-542-7975)</span>
+                <span>WhatsApp Order</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleTelegramDirect}
+                className="flex items-center justify-center gap-2 rounded-xl bg-[#229ED9] hover:bg-[#1e8ec3] py-3.5 px-3 text-xs sm:text-sm font-extrabold text-white transition-all shadow-lg shadow-[#229ED9]/15 active:scale-99 cursor-pointer"
+              >
+                <svg className="h-4 w-4 fill-current shrink-0" viewBox="0 0 24 24">
+                  <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+                </svg>
+                <span>Telegram @bigovv</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => onAddToCart(product)}
-                className="flex items-center justify-center gap-2 rounded-xl bg-[#F5A623] hover:bg-[#e09419] py-3.5 px-4 text-sm font-extrabold text-black transition-all shadow-lg shadow-[#F5A623]/10 active:scale-99 cursor-pointer"
+                className="flex items-center justify-center gap-2 rounded-xl bg-[#F5A623] hover:bg-[#e09419] py-3.5 px-3 text-xs sm:text-sm font-extrabold text-black transition-all shadow-lg shadow-[#F5A623]/15 active:scale-99 cursor-pointer"
               >
                 <ShoppingCart className="h-4 w-4 stroke-[2.5]" />
-                <span>Add to Cart (${totalPrice.toFixed(2)})</span>
+                <span>Add (${totalPrice.toFixed(2)})</span>
               </button>
             </div>
 
@@ -388,7 +430,7 @@ export const ProductBuyPage: React.FC<ProductBuyPageProps> = ({
               <div className="flex items-center justify-between border-b border-[#202332] pb-3 mb-4">
                 <div className="flex items-center gap-2">
                   <Zap className="h-4 w-4 text-[#F5A623]" />
-                  <h3 className="text-sm font-black text-white">Instant One-Step Order Dispatch</h3>
+                  <h3 className="text-sm font-black text-white">Order via Email &amp; Send to Google Sheet</h3>
                 </div>
                 <span className="text-xs font-bold text-amber-400">Total: ${totalPrice.toFixed(2)} USD</span>
               </div>
@@ -410,66 +452,48 @@ export const ProductBuyPage: React.FC<ProductBuyPageProps> = ({
 
                 <div>
                   <label className="block text-xs font-bold text-slate-300 mb-1">
-                    WhatsApp Number (for instant backup delivery &amp; support)
+                    What You Want / Special Instructions (optional)
                   </label>
                   <input
-                    type="tel"
-                    placeholder="e.g. +1 520-542-7975"
-                    value={customerPhone}
-                    onChange={(e) => setCustomerPhone(e.target.value)}
+                    type="text"
+                    placeholder="e.g. need clean install help or specific edition"
+                    value={orderNote}
+                    onChange={(e) => setOrderNote(e.target.value)}
                     className="w-full rounded-xl bg-[#0e1017] border border-[#2b2f42] px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-hidden focus:border-[#F5A623] transition-colors"
                   />
                 </div>
 
-                {/* Payment Selection */}
+                {/* Dispatch Channel: WhatsApp vs Telegram @bigovv */}
                 <div>
                   <label className="block text-xs font-bold text-slate-300 mb-1.5">
-                    Select Payment Method:
+                    Choose Fast Contact &amp; Dispatch Method:
                   </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                  <div className="grid grid-cols-2 gap-2.5 text-xs">
                     <button
                       type="button"
-                      onClick={() => setPaymentMethod('whatsapp')}
-                      className={`p-2.5 rounded-xl border font-bold text-center transition-all cursor-pointer ${
-                        paymentMethod === 'whatsapp'
-                          ? 'border-emerald-500 bg-emerald-950/40 text-emerald-300'
+                      onClick={() => setOrderChannel('whatsapp')}
+                      className={`p-3 rounded-xl border font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                        orderChannel === 'whatsapp'
+                          ? 'border-emerald-500 bg-emerald-950/50 text-emerald-300 ring-1 ring-emerald-500'
                           : 'border-[#262938] bg-[#141620] text-slate-400 hover:text-white'
                       }`}
                     >
-                      WhatsApp Direct
+                      <Phone className="h-3.5 w-3.5 text-emerald-400" />
+                      <span>WhatsApp Direct</span>
                     </button>
                     <button
                       type="button"
-                      onClick={() => setPaymentMethod('card')}
-                      className={`p-2.5 rounded-xl border font-bold text-center transition-all cursor-pointer ${
-                        paymentMethod === 'card'
-                          ? 'border-amber-500 bg-amber-950/40 text-amber-300'
+                      onClick={() => setOrderChannel('telegram')}
+                      className={`p-3 rounded-xl border font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                        orderChannel === 'telegram'
+                          ? 'border-sky-500 bg-sky-950/50 text-sky-300 ring-1 ring-sky-500'
                           : 'border-[#262938] bg-[#141620] text-slate-400 hover:text-white'
                       }`}
                     >
-                      Credit Card
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod('paypal')}
-                      className={`p-2.5 rounded-xl border font-bold text-center transition-all cursor-pointer ${
-                        paymentMethod === 'paypal'
-                          ? 'border-blue-500 bg-blue-950/40 text-blue-300'
-                          : 'border-[#262938] bg-[#141620] text-slate-400 hover:text-white'
-                      }`}
-                    >
-                      PayPal
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod('crypto')}
-                      className={`p-2.5 rounded-xl border font-bold text-center transition-all cursor-pointer ${
-                        paymentMethod === 'crypto'
-                          ? 'border-purple-500 bg-purple-950/40 text-purple-300'
-                          : 'border-[#262938] bg-[#141620] text-slate-400 hover:text-white'
-                      }`}
-                    >
-                      Crypto (USDT)
+                      <svg className="h-3.5 w-3.5 fill-current text-sky-400" viewBox="0 0 24 24">
+                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+                      </svg>
+                      <span>Telegram @bigovv</span>
                     </button>
                   </div>
                 </div>
@@ -477,13 +501,18 @@ export const ProductBuyPage: React.FC<ProductBuyPageProps> = ({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full rounded-xl bg-gradient-to-r from-[#F5A623] to-[#e09419] hover:from-[#e09419] hover:to-[#c68012] py-3.5 text-sm font-black text-black shadow-lg shadow-[#F5A623]/20 active:scale-99 transition-all cursor-pointer disabled:opacity-50"
+                  className="w-full rounded-xl bg-gradient-to-r from-[#F5A623] to-[#e09419] hover:from-[#e09419] hover:to-[#c68012] py-3.5 text-sm font-black text-black shadow-lg shadow-[#F5A623]/20 active:scale-99 transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                  {isSubmitting ? 'Processing Order...' : `Complete Order Now — $${totalPrice.toFixed(2)} USD`}
+                  <Mail className="h-4 w-4" />
+                  <span>
+                    {isSubmitting
+                      ? 'Sending Order to Google Sheet...'
+                      : `Submit Order to Google Sheet — $${totalPrice.toFixed(2)} USD`}
+                  </span>
                 </button>
 
                 <p className="text-[11px] text-center text-slate-400">
-                  Instant key delivery to your email in &lt; 60 seconds. Guaranteed authentic.
+                  Data is recorded automatically to our Google Sheet &amp; keys are dispatched immediately.
                 </p>
               </form>
             </div>

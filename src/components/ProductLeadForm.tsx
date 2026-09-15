@@ -8,8 +8,9 @@ export const AVAILABLE_PRODUCTS = [
   'Windows 11 Pro (No Warranty)',
   'Windows 10 Pro (No Warranty)',
   'Windows 11 Home (No Warranty)',
+  'Google AI Pro: Gemini Advanced',
   'Netflix Premium 4K (Warranty Included)',
-  'Spotify Premium (No Warranty)',
+  'Crunchyroll 12 Months Mega Fan',
   'Office 2024 Pro Plus',
   'Office 2021 Pro Plus',
   'Microsoft 365 Personal',
@@ -38,7 +39,8 @@ export const ProductLeadForm: React.FC<ProductLeadFormProps> = ({
   const getInitialProduct = (): AvailableProduct => {
     const lower = defaultProduct.toLowerCase();
     if (lower.includes('netflix')) return 'Netflix Premium 4K (Warranty Included)';
-    if (lower.includes('spotify')) return 'Spotify Premium (No Warranty)';
+    if (lower.includes('gemini') || lower.includes('google')) return 'Google AI Pro: Gemini Advanced';
+    if (lower.includes('crunchyroll')) return 'Crunchyroll 12 Months Mega Fan';
     if (lower.includes('11 pro')) return 'Windows 11 Pro (No Warranty)';
     if (lower.includes('10 pro')) return 'Windows 10 Pro (No Warranty)';
     if (lower.includes('11 home')) return 'Windows 11 Home (No Warranty)';

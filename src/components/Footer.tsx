@@ -94,6 +94,16 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <a
+                  href="https://t.me/bigovv"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#229ED9] transition-colors flex items-center gap-1.5"
+                >
+                  <span className="text-sky-400 font-bold">Telegram:</span> @bigovv
+                </a>
+              </li>
+              <li>
+                <a
                   href="mailto:123123xr@gmail.com"
                   className="hover:text-[#F5A623] transition-colors flex items-center gap-1.5"
                 >
@@ -116,7 +126,17 @@ export const Footer: React.FC<FooterProps> = ({
                   rel="noopener noreferrer"
                   className="hover:text-[#25D366] transition-colors"
                 >
-                  WhatsApp Direct Support
+                  WhatsApp Direct Support (+1 520-542-7975)
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://t.me/bigovv"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#229ED9] transition-colors"
+                >
+                  Telegram Direct Support (@bigovv)
                 </a>
               </li>
               <li>

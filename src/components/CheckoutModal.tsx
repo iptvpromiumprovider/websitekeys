@@ -41,6 +41,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const WHATSAPP_NUMBER = '15205427975';
   const WHATSAPP_DISPLAY = '+1 520-542-7975';
+  const TELEGRAM_HANDLE = '@bigovv';
   const CONTACT_EMAIL = '123123xr@gmail.com';
 
   const itemsSummary = items
@@ -52,7 +53,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     )
     .join('\n');
 
-  const formattedMessage = `Hello RoyalCDKeys! I want to purchase the following digital license(s):
+  const formattedMessage = `Hello RoyalCDKeys / @bigovv! I want to purchase the following digital license(s):
 
 ${itemsSummary}
 
@@ -62,6 +63,13 @@ Please provide activation key delivery and instructions. Thank you!`;
 
   const handleWhatsAppOrder = () => {
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+      formattedMessage
+    )}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleTelegramOrder = () => {
+    const url = `https://t.me/bigovv?text=${encodeURIComponent(
       formattedMessage
     )}`;
     window.open(url, '_blank', 'noopener,noreferrer');
@@ -241,6 +249,35 @@ Please provide activation key delivery and instructions. Thank you!`;
                 </div>
               </div>
               <ExternalLink className="h-5 w-5 text-black shrink-0" />
+            </button>
+
+            {/* Telegram Direct Button (@bigovv) */}
+            <button
+              type="button"
+              onClick={handleTelegramOrder}
+              className="w-full group flex items-center justify-between rounded-xl bg-[#229ED9] hover:bg-[#1e8ec3] p-4 text-white font-bold transition-all shadow-lg shadow-[#229ED9]/20 cursor-pointer"
+            >
+              <div className="flex items-center gap-3 text-left">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20">
+                  <svg className="h-6 w-6 fill-current text-white" viewBox="0 0 24 24">
+                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm sm:text-base font-extrabold text-white">
+                      Order via Telegram
+                    </span>
+                    <span className="rounded bg-white/20 px-2 py-0.5 text-[10px] font-extrabold text-white">
+                      {TELEGRAM_HANDLE}
+                    </span>
+                  </div>
+                  <p className="text-xs text-white/80 font-medium">
+                    Direct message on Telegram: {TELEGRAM_HANDLE}
+                  </p>
+                </div>
+              </div>
+              <ExternalLink className="h-5 w-5 text-white shrink-0" />
             </button>
 
             {/* Email Direct Button */}

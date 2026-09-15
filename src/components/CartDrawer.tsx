@@ -170,13 +170,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 onClick={onCheckout}
                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] py-3.5 text-sm font-extrabold text-black transition-all shadow-lg shadow-[#25D366]/10 active:scale-99 cursor-pointer"
               >
-                <span>Order via WhatsApp or Email</span>
+                <span>Order via WhatsApp, Telegram or Email</span>
                 <ArrowRight className="h-4 w-4 stroke-[2.5]" />
               </button>
 
               <div className="flex items-center justify-center gap-2 text-[11px] text-slate-400">
                 <ShieldCheck className="h-4 w-4 text-emerald-400 shrink-0" />
-                <span>Direct Order • WhatsApp (+1 520-542-7975) &amp; Email Support</span>
+                <span>Direct Order • WhatsApp &amp; Telegram (@bigovv)</span>
               </div>
             </div>
           )}
