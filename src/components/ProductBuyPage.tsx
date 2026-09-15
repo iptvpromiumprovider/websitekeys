@@ -662,20 +662,20 @@ export const ProductBuyPage: React.FC<ProductBuyPageProps> = ({
                   <div className="rounded-xl border border-emerald-500/40 bg-[#122319] p-4">
                     <div className="flex items-center gap-2 text-emerald-400 font-extrabold text-sm">
                       <Check className="h-4 w-4 shrink-0" />
-                      <span>Garanti Yes (100% Full Replacement Warranty)</span>
+                      <span>Full Lifetime Genuine Activation Guarantee</span>
                     </div>
                     <p className="text-xs text-emerald-300/90 mt-1.5">
-                      This product includes a complete 100% replacement warranty throughout your active subscription. In the event of any credential expiration or reset, simply message our team on WhatsApp for an immediate replacement.
+                      This product includes a 100% activation guarantee directly through Microsoft activation servers. If any validation issues occur during initial activation, our 24/7 support team provides immediate assistance or replacement.
                     </p>
                   </div>
                 ) : (
                   <div className="rounded-xl border border-amber-500/40 bg-[#251f14] p-4">
                     <div className="flex items-center gap-2 text-amber-300 font-extrabold text-sm">
                       <ShieldCheck className="h-4 w-4 shrink-0" />
-                      <span>No Garanti (Wholesale Single Activation Guarantee)</span>
+                      <span>Wholesale Single-PC Lifetime License</span>
                     </div>
                     <p className="text-xs text-amber-300/90 mt-1.5">
-                      Offered at rock-bottom liquidation wholesale rates with a single activation guarantee. Sold without extended replacement warranty (Sans Garantie) to keep prices at maximum discount.
+                      Offered at wholesale volume rates for single-PC permanent activation. Binds directly to your hardware with official Microsoft updates and zero ongoing maintenance fees.
                     </p>
                   </div>
                 )}

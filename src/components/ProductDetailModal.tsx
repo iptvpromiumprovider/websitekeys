@@ -115,7 +115,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   <RotateCcw className={`h-4 w-4 shrink-0 ${product.warrantyStatus === 'guaranteed' ? 'text-emerald-400' : 'text-amber-400'}`} />
                   <div>
                     <span className="font-semibold text-white">Warranty Policy:</span>{' '}
-                    {product.warrantyText || (product.warrantyStatus === 'guaranteed' ? '100% Full Replacement Warranty (Garanti Yes)' : 'Sold at wholesale discount with No Warranty (No Garanti)')}
+                    {product.warrantyText || (product.warrantyStatus === 'guaranteed' ? '100% Genuine Activation Guarantee' : 'Wholesale Single-PC Lifetime License')}
                   </div>
                 </div>
               </div>
@@ -135,12 +135,12 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   {product.warrantyStatus === 'guaranteed' ? (
                     <span className="inline-flex items-center gap-1 rounded bg-emerald-500/15 border border-emerald-500/40 px-2.5 py-0.5 text-xs font-bold text-emerald-300">
                       <Check className="h-3 w-3 text-emerald-400" />
-                      <span>Garanti Yes (100% Replacement Warranty)</span>
+                      <span>100% Genuine Activation Guarantee</span>
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-1 rounded bg-amber-500/15 border border-amber-500/30 px-2.5 py-0.5 text-xs font-bold text-amber-300">
                       <ShieldCheck className="h-3 w-3 text-amber-400" />
-                      <span>No Garanti (Wholesale / Sans Garantie)</span>
+                      <span>Wholesale Single-PC License</span>
                     </span>
                   )}
                   <span className="text-xs text-slate-500">SKU: {product.sku}</span>

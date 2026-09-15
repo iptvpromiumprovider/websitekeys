@@ -100,11 +100,11 @@ export const Header: React.FC<HeaderProps> = ({
             </a>
             <span className="text-slate-600 hidden md:inline">|</span>
             <a
-              href="mailto:123123xr@gmail.com"
+              href="mailto:support@royalcdkeys.com"
               className="hidden md:flex items-center gap-1.5 text-amber-400 hover:underline"
             >
               <Mail className="h-3 w-3" />
-              <span>123123xr@gmail.com</span>
+              <span>support@royalcdkeys.com</span>
             </a>
           </div>
 
@@ -240,7 +240,7 @@ export const Header: React.FC<HeaderProps> = ({
                             ${product.currentPrice.toFixed(2)}
                           </span>
                           <span className="text-[10px] text-slate-400">
-                            {product.warrantyStatus === 'guaranteed' ? 'Garanti Yes' : 'No Garanti'}
+                            {product.warrantyStatus === 'guaranteed' ? 'Genuine Guarantee' : 'Wholesale Key'}
                           </span>
                         </div>
                       </div>

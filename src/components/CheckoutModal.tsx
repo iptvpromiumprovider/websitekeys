@@ -42,7 +42,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const WHATSAPP_NUMBER = '15205427975';
   const WHATSAPP_DISPLAY = '+1 520-542-7975';
   const TELEGRAM_HANDLE = '@bigovv';
-  const CONTACT_EMAIL = '123123xr@gmail.com';
+  const CONTACT_EMAIL = 'support@royalcdkeys.com';
 
   const itemsSummary = items
     .map(

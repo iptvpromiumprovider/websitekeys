@@ -105,12 +105,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       {item.product.warrantyStatus === 'guaranteed' ? (
                         <div className="mt-1 flex items-center gap-1 text-[10px] font-bold text-emerald-400 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-500/30 w-fit">
                           <Check className="h-2.5 w-2.5" />
-                          <span>Garanti Yes (100% Replacement Warranty)</span>
+                          <span>100% Genuine Activation Guarantee</span>
                         </div>
                       ) : (
                         <div className="mt-1 flex items-center gap-1 text-[10px] font-bold text-amber-300 bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-500/30 w-fit">
                           <ShieldCheck className="h-2.5 w-2.5 text-amber-400" />
-                          <span>No Garanti (Wholesale Single Activation)</span>
+                          <span>Wholesale Single-PC License</span>
                         </div>
                       )}
                     </div>

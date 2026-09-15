@@ -21,7 +21,7 @@ export const WindowsProductShowcase: React.FC<WindowsProductShowcaseProps> = ({
     (p) => p.categoryId === 'windows' || p.categoryId === 'office' || p.categoryId === 'software'
   );
 
-  // Top Subscription Deals (Streaming subscriptions, Gemini Advanced, Spotify, Crunchyroll)
+  // Top Subscription & Gaming Deals (Xbox Game Pass, Gemini Advanced, Steam Keys)
   const subscriptionDeals = products.filter(
     (p) => p.categoryId === 'subscription' || p.categoryId === 'streaming' || p.categoryId === 'subscriptions'
   );
@@ -91,10 +91,10 @@ export const WindowsProductShowcase: React.FC<WindowsProductShowcaseProps> = ({
           <div className="flex items-center justify-between mb-5 sm:mb-6 border-b border-[#1f222e] pb-3">
             <div>
               <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                Top Subscription Deals
+                Top Gaming &amp; Subscription Deals
               </h2>
               <p className="text-xs text-slate-400 mt-0.5">
-                Streaming subscriptions, AI productivity tools, and entertainment services
+                Xbox Game Pass subscriptions, AI productivity tools, and digital gaming keys
               </p>
             </div>
           </div>

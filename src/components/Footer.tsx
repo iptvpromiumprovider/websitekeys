@@ -104,10 +104,10 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <a
-                  href="mailto:123123xr@gmail.com"
+                  href="mailto:support@royalcdkeys.com"
                   className="hover:text-[#F5A623] transition-colors flex items-center gap-1.5"
                 >
-                  <span className="text-amber-400 font-bold">Email:</span> 123123xr@gmail.com
+                  <span className="text-amber-400 font-bold">Email:</span> support@royalcdkeys.com
                 </a>
               </li>
             </ul>
@@ -141,10 +141,10 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <a
-                  href="mailto:123123xr@gmail.com?subject=Support%20Request"
+                  href="mailto:support@royalcdkeys.com?subject=Support%20Request"
                   className="hover:text-[#F5A623] transition-colors"
                 >
-                  Email Support (123123xr@gmail.com)
+                  Email Support (support@royalcdkeys.com)
                 </a>
               </li>
               <li>

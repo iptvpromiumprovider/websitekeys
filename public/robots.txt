@@ -1,0 +1,6 @@
+# Robots.txt for RoyalCDKeys
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://royalcdkeys.com/sitemap.xml

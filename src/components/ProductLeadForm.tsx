@@ -5,17 +5,17 @@ export const GOOGLE_SCRIPT_URL =
   'https://script.google.com/macros/s/AKfycby0_aceIACtHWDgJh8gFugRCDwJChdQp6LPH0rOLzggcHPG48u1O-usTpx3adxA2YU2gA/exec';
 
 export const AVAILABLE_PRODUCTS = [
-  'Windows 11 Pro (No Warranty)',
-  'Windows 10 Pro (No Warranty)',
-  'Windows 11 Home (No Warranty)',
+  'Windows 11 Pro Retail License',
+  'Windows 10 Pro Retail License',
+  'Windows 11 Home OEM License',
+  'Office 2024 Professional Plus',
+  'Office 2021 Professional Plus',
+  'Xbox Game Pass Ultimate (1 Month)',
+  'Cyberpunk 2077 Steam CD Key',
   'Google AI Pro: Gemini Advanced',
-  'Netflix Premium 4K (Warranty Included)',
-  'Crunchyroll 12 Months Mega Fan',
-  'Office 2024 Pro Plus',
-  'Office 2021 Pro Plus',
   'Microsoft 365 Personal',
   'Microsoft 365 Family',
-  'Other',
+  'Other Software / Game Key',
 ] as const;
 
 export type AvailableProduct = (typeof AVAILABLE_PRODUCTS)[number];
@@ -29,7 +29,7 @@ interface ProductLeadFormProps {
 }
 
 export const ProductLeadForm: React.FC<ProductLeadFormProps> = ({
-  defaultProduct = 'Windows 11 Pro (No Warranty)',
+  defaultProduct = 'Windows 11 Pro Retail License',
   title = 'Direct Order & License Request',
   subtitle = 'Enter your email to receive your genuine license details and activation instructions.',
   className = '',
@@ -38,20 +38,20 @@ export const ProductLeadForm: React.FC<ProductLeadFormProps> = ({
   // Determine matching default product
   const getInitialProduct = (): AvailableProduct => {
     const lower = defaultProduct.toLowerCase();
-    if (lower.includes('netflix')) return 'Netflix Premium 4K (Warranty Included)';
+    if (lower.includes('xbox') || lower.includes('game pass')) return 'Xbox Game Pass Ultimate (1 Month)';
+    if (lower.includes('cyberpunk') || lower.includes('steam')) return 'Cyberpunk 2077 Steam CD Key';
     if (lower.includes('gemini') || lower.includes('google')) return 'Google AI Pro: Gemini Advanced';
-    if (lower.includes('crunchyroll')) return 'Crunchyroll 12 Months Mega Fan';
-    if (lower.includes('11 pro')) return 'Windows 11 Pro (No Warranty)';
-    if (lower.includes('10 pro')) return 'Windows 10 Pro (No Warranty)';
-    if (lower.includes('11 home')) return 'Windows 11 Home (No Warranty)';
-    if (lower.includes('2024')) return 'Office 2024 Pro Plus';
-    if (lower.includes('2021')) return 'Office 2021 Pro Plus';
+    if (lower.includes('11 pro')) return 'Windows 11 Pro Retail License';
+    if (lower.includes('10 pro')) return 'Windows 10 Pro Retail License';
+    if (lower.includes('11 home')) return 'Windows 11 Home OEM License';
+    if (lower.includes('2024')) return 'Office 2024 Professional Plus';
+    if (lower.includes('2021')) return 'Office 2021 Professional Plus';
     if (lower.includes('personal')) return 'Microsoft 365 Personal';
     if (lower.includes('family')) return 'Microsoft 365 Family';
     const match = AVAILABLE_PRODUCTS.find((p) =>
       p.toLowerCase().includes(lower) || lower.includes(p.toLowerCase())
     );
-    return match || 'Windows 11 Pro (No Warranty)';
+    return match || 'Windows 11 Pro Retail License';
   };
 
   const [email, setEmail] = useState('');
@@ -62,13 +62,14 @@ export const ProductLeadForm: React.FC<ProductLeadFormProps> = ({
 
   React.useEffect(() => {
     const lower = defaultProduct.toLowerCase();
-    if (lower.includes('netflix')) setTool('Netflix Premium 4K (Warranty Included)');
-    else if (lower.includes('spotify')) setTool('Spotify Premium (No Warranty)');
-    else if (lower.includes('11 pro')) setTool('Windows 11 Pro (No Warranty)');
-    else if (lower.includes('10 pro')) setTool('Windows 10 Pro (No Warranty)');
-    else if (lower.includes('11 home')) setTool('Windows 11 Home (No Warranty)');
-    else if (lower.includes('2024')) setTool('Office 2024 Pro Plus');
-    else if (lower.includes('2021')) setTool('Office 2021 Pro Plus');
+    if (lower.includes('xbox') || lower.includes('game pass')) setTool('Xbox Game Pass Ultimate (1 Month)');
+    else if (lower.includes('cyberpunk') || lower.includes('steam')) setTool('Cyberpunk 2077 Steam CD Key');
+    else if (lower.includes('gemini') || lower.includes('google')) setTool('Google AI Pro: Gemini Advanced');
+    else if (lower.includes('11 pro')) setTool('Windows 11 Pro Retail License');
+    else if (lower.includes('10 pro')) setTool('Windows 10 Pro Retail License');
+    else if (lower.includes('11 home')) setTool('Windows 11 Home OEM License');
+    else if (lower.includes('2024')) setTool('Office 2024 Professional Plus');
+    else if (lower.includes('2021')) setTool('Office 2021 Professional Plus');
     else if (lower.includes('personal')) setTool('Microsoft 365 Personal');
     else if (lower.includes('family')) setTool('Microsoft 365 Family');
     else {

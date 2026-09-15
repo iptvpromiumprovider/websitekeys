@@ -5,25 +5,25 @@ export const WhyChooseUs: React.FC = () => {
   const points = [
     {
       icon: <ShieldCheck className="h-5 w-5 text-emerald-400" />,
-      title: 'Netflix 100% Replacement Warranty (Garanti Yes)',
+      title: '100% Genuine Retail & OEM Licenses',
       description:
-        'All Netflix Premium 4K UHD accounts include a dedicated replacement warranty throughout your active billing period. If any login or profile issue arises, get an instant replacement via WhatsApp.',
-      badge: 'Garanti Yes',
+        'All Microsoft Windows 11, Windows 10, and Office 2024 license keys authenticate directly with official Microsoft activation servers. Enjoy full security updates and official features.',
+      badge: '100% Genuine',
       badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
     },
     {
       icon: <AlertCircle className="h-5 w-5 text-amber-400" />,
-      title: 'Windows Keys & Spotify Wholesale (No Garanti)',
+      title: 'Direct Wholesale Volume Pricing',
       description:
-        'We pass maximum wholesale savings directly to you: Windows 11/10 keys ($4.82-$5.43) and Spotify Premium ($2.99) are sold as-is without ongoing warranty (No Garanti / Sans Garantie) to keep prices unbeatable.',
-      badge: 'No Garanti',
+        'We pass direct wholesale savings to you with genuine single-PC lifetime activation keys. No middleman markups, giving you the lowest rates on authentic software licenses.',
+      badge: 'Wholesale Rates',
       badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
     },
     {
       icon: <Clock className="h-5 w-5 text-[#F5A623]" />,
-      title: 'Instant Delivery via WhatsApp & Email',
+      title: 'Instant Digital Delivery',
       description:
-        'Orders are processed immediately. Receive your 25-character digital license key or streaming account credentials directly on WhatsApp (+1 520-542-7975) and in your email inbox.',
+        'Orders are processed immediately. Receive your 25-character digital license key and official download setup links in seconds via email, WhatsApp, or Telegram.',
       badge: '< 60 Seconds',
       badgeColor: 'bg-[#F5A623]/20 text-amber-300 border-[#F5A623]/30',
     },
@@ -37,17 +37,17 @@ export const WhyChooseUs: React.FC = () => {
     },
     {
       icon: <MessageCircle className="h-5 w-5 text-green-400" />,
-      title: 'Direct WhatsApp Human Support',
+      title: 'Direct WhatsApp & Telegram Support',
       description:
-        'Need setup guidance or quick confirmation? Chat directly with our human specialists at +1 520-542-7975. We assist with clean installs, activation commands, and profile setup.',
-      badge: '24/7 Human',
+        'Need setup guidance or activation help? Chat directly with our human specialists on WhatsApp (+1 520-542-7975) or Telegram (@bigovv). We assist with clean installs and setup.',
+      badge: '24/7 Human Help',
       badgeColor: 'bg-green-500/20 text-green-300 border-green-500/30',
     },
     {
       icon: <Zap className="h-5 w-5 text-purple-400" />,
       title: 'Zero Hidden Fees & Global Activation',
       description:
-        'The price you see is the final price. No hidden processing surcharges or surprise subscription fees. All licenses are region-free Global editions.',
+        'The price you see is the final price. No hidden processing surcharges or recurring subscription fees. All licenses are region-free Global editions.',
       badge: 'Region-Free',
       badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
     },
