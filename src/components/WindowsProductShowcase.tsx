@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Product } from '../types';
 import { ProductCardRoyal } from './ProductCardRoyal';
 
-
 interface WindowsProductShowcaseProps {
   products: Product[];
   onAddToCart: (product: Product) => void;
@@ -36,28 +35,31 @@ export const WindowsProductShowcase: React.FC<WindowsProductShowcaseProps> = ({
   };
 
   return (
-    <div id="catalog-section" className="w-full bg-[#0b0c10] py-8 sm:py-12">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-14 sm:space-y-20">
+    <div id="catalog-section" className="w-full bg-[#0A0A0A] py-10 sm:py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-24">
 
-        {/* ============================================================== */}
-        {/* SECTION 1: TOP SOFTWARE DEALS (Exact match from screenshot)    */}
-        {/* ============================================================== */}
+        {/* SECTION 1: TOP SOFTWARE DEALS */}
         <section id="software-deals-section" className="scroll-mt-24">
-          <div className="flex items-center justify-between mb-5 sm:mb-6 border-b border-[#1f222e] pb-3">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 border-b border-white/10 pb-4 gap-4">
             <div>
-              <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                Top Software Deals
+              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#F5A623] mb-1.5">
+                <span>02</span>
+                <span className="text-white/20">/</span>
+                <span>OPERATING SYSTEMS &amp; PRODUCTIVITY</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight font-['Space_Grotesk',sans-serif]">
+                Top Software Licenses.
               </h2>
-              <p className="text-xs text-slate-400 mt-0.5">
-                Genuine OEM &amp; Retail Microsoft Windows licenses &amp; Office suites
+              <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                Authentic Microsoft Windows OEM &amp; Retail product keys and Office suites
               </p>
             </div>
-            <span className="text-xs font-bold text-[#F5A623] bg-[#F5A623]/10 px-2.5 py-1 rounded border border-[#F5A623]/30">
-              Save up to 98%
-            </span>
+            <div className="text-xs font-mono text-[#F5A623] uppercase tracking-wider">
+              Save up to 98% Wholesale Margin
+            </div>
           </div>
 
-          {/* 5 columns on large screens matching screenshot */}
+          {/* 5 columns on large screens */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             {(expandedSection.software ? softwareDeals : softwareDeals.slice(0, 10)).map((product) => (
               <ProductCardRoyal
@@ -76,26 +78,32 @@ export const WindowsProductShowcase: React.FC<WindowsProductShowcaseProps> = ({
               <button
                 type="button"
                 onClick={() => toggleSection('software')}
-                className="rounded-lg border border-[#2b2f40] bg-[#141620] hover:bg-[#1d202e] hover:border-[#F5A623] px-8 py-2.5 text-xs sm:text-sm font-bold text-white transition-colors cursor-pointer"
+                className="border border-white/10 bg-[#111216] hover:bg-[#181920] hover:border-[#F5A623] px-8 py-3 text-xs uppercase font-bold tracking-wider text-white transition-all duration-200 cursor-pointer font-['Space_Grotesk',sans-serif]"
               >
-                {expandedSection.software ? 'Show Less' : 'View All'}
+                {expandedSection.software ? 'Show Less' : 'View All Software'}
               </button>
             </div>
           )}
         </section>
 
-        {/* ============================================================== */}
-        {/* SECTION 2: TOP SUBSCRIPTION DEALS (from screenshot & uploads)   */}
-        {/* ============================================================== */}
+        {/* SECTION 2: TOP SUBSCRIPTION DEALS */}
         <section id="subscriptions-section" className="scroll-mt-24">
-          <div className="flex items-center justify-between mb-5 sm:mb-6 border-b border-[#1f222e] pb-3">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 border-b border-white/10 pb-4 gap-4">
             <div>
-              <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                Top Gaming &amp; Subscription Deals
+              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#F5A623] mb-1.5">
+                <span>03</span>
+                <span className="text-white/20">/</span>
+                <span>GAMING PASSES &amp; AI PRODUCTIVITY</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight font-['Space_Grotesk',sans-serif]">
+                Gaming &amp; Subscription Passes.
               </h2>
-              <p className="text-xs text-slate-400 mt-0.5">
-                Xbox Game Pass subscriptions, AI productivity tools, and digital gaming keys
+              <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                Xbox Game Pass Ultimate, Google AI Advanced, and digital gaming licenses
               </p>
+            </div>
+            <div className="text-xs font-mono text-slate-400 uppercase tracking-wider">
+              Global Region-Free Activation
             </div>
           </div>
 
@@ -112,15 +120,15 @@ export const WindowsProductShowcase: React.FC<WindowsProductShowcaseProps> = ({
             ))}
           </div>
 
-          {/* View All Button if more than 10 */}
+          {/* View All Button */}
           {subscriptionDeals.length > 10 && (
             <div className="mt-8 flex justify-center">
               <button
                 type="button"
                 onClick={() => toggleSection('subscriptions')}
-                className="rounded-lg border border-[#2b2f40] bg-[#141620] hover:bg-[#1d202e] hover:border-[#F5A623] px-8 py-2.5 text-xs sm:text-sm font-bold text-white transition-colors cursor-pointer"
+                className="border border-white/10 bg-[#111216] hover:bg-[#181920] hover:border-[#F5A623] px-8 py-3 text-xs uppercase font-bold tracking-wider text-white transition-all duration-200 cursor-pointer font-['Space_Grotesk',sans-serif]"
               >
-                {expandedSection.subscriptions ? 'Show Less' : 'View All'}
+                {expandedSection.subscriptions ? 'Show Less' : 'View All Gaming & Passes'}
               </button>
             </div>
           )}

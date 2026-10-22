@@ -26,9 +26,9 @@ export const Footer: React.FC<FooterProps> = ({
   };
 
   return (
-    <footer className="bg-[#0f1013] text-slate-400 text-xs border-t border-[#1f2127]">
-      {/* Main Footer Columns matching image.png */}
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <footer className="bg-[#0A0A0A] text-slate-400 text-xs border-t border-white/10">
+      {/* Main Footer Columns */}
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           
           {/* Column 1: Quick links */}

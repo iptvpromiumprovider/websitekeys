@@ -1,6 +1,6 @@
 import React from 'react';
 import { Product } from '../types';
-import { ShoppingCart, Zap, Laptop, Globe, Layers, CheckCircle2 } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 
 interface ProductCardRoyalProps {
   product: Product;
@@ -19,89 +19,64 @@ export const ProductCardRoyal: React.FC<ProductCardRoyalProps> = ({
     ((product.originalPrice - product.currentPrice) / product.originalPrice) * 100
   );
 
-  const getPlatformIcon = () => {
-    const p = (product.platformTag || product.platform).toLowerCase();
-    if (p.includes('windows')) {
-      return <Laptop className="w-3 h-3 text-sky-400" />;
-    }
-    if (p.includes('mac')) {
-      return <Globe className="w-3 h-3 text-slate-300" />;
-    }
-    return <Layers className="w-3 h-3 text-amber-400" />;
-  };
-
   return (
     <div
       id={`card-${product.id}`}
-      className="group flex flex-col justify-between rounded-xl border border-[#232635] bg-[#141620] p-3 hover:border-[#F5A623] transition-colors"
+      className="group flex flex-col justify-between border border-white/10 bg-[#111216] p-3.5 hover:border-[#F5A623]/60 hover:-translate-y-1 transition-all duration-300 ease-out shadow-sm"
     >
       <div>
         {/* Product Image Area */}
         <div
           onClick={() => onQuickView(product)}
-          className="relative aspect-[4/3] w-full cursor-pointer overflow-hidden rounded-lg bg-[#0e1017] border border-[#1e202d] flex items-center justify-center"
+          className="relative aspect-[4/3] w-full cursor-pointer overflow-hidden bg-[#0A0A0A] border border-white/10 flex items-center justify-center"
         >
           <img
             src={product.imageUrl}
             alt={product.title}
-            className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             loading="lazy"
             referrerPolicy="no-referrer"
           />
 
-          {/* Discount Badge */}
+          {/* Minimalist Discount Tag */}
           {discount > 0 && (
             <div className="absolute top-2 right-2">
-              <span className="rounded bg-[#F5A623] px-1.5 py-0.5 text-[11px] font-black text-black">
+              <span className="font-mono text-[10px] font-bold text-black bg-[#F5A623] px-1.5 py-0.5">
                 -{discount}%
               </span>
             </div>
           )}
 
-          {/* Instant Delivery Badge */}
+          {/* Instant Delivery Tag */}
           <div className="absolute top-2 left-2">
-            <span className="inline-flex items-center gap-1 rounded bg-[#0b0c10]/90 px-1.5 py-0.5 text-[10px] font-bold text-slate-300 border border-[#2b2d3d]">
-              <Zap className="h-2.5 w-2.5 text-amber-400" />
-              <span>Instant</span>
-            </span>
-          </div>
-
-          {/* Platform Pill at bottom left */}
-          <div className="absolute bottom-2 left-2">
-            <span className="inline-flex items-center gap-1 rounded bg-[#10121a]/95 px-1.5 py-0.5 text-[10px] font-semibold text-slate-300 border border-[#282b3a]">
-              {getPlatformIcon()}
-              <span>{product.platformTag || product.platform}</span>
+            <span className="font-mono text-[9px] uppercase tracking-wider text-slate-300 bg-[#0A0A0A]/90 px-1.5 py-0.5 border border-white/10">
+              Instant
             </span>
           </div>
         </div>
 
-        {/* Product Title */}
+        {/* Clean Editorial Metadata (Zero Pill) */}
+        <div className="mt-2.5 flex items-center justify-between text-[10px] font-mono uppercase tracking-wider text-slate-400">
+          <span className="text-[#F5A623] font-bold">{product.platformTag || product.platform}</span>
+          <span>·</span>
+          <span>GLOBAL KEY</span>
+        </div>
+
+        {/* Product Title in Space Grotesk */}
         <h3
           onClick={() => onQuickView(product)}
-          className="mt-2.5 cursor-pointer text-xs sm:text-[13px] font-bold text-white line-clamp-2 leading-snug hover:text-[#F5A623] transition-colors min-h-[36px]"
+          className="mt-1 cursor-pointer text-xs sm:text-[13px] font-bold text-white line-clamp-2 leading-snug hover:text-[#F5A623] transition-colors min-h-[36px] font-['Space_Grotesk',sans-serif]"
           title={product.title}
         >
           {product.title}
         </h3>
-
-        {/* Region & Stock Info */}
-        <div className="mt-2 flex items-center justify-between text-[11px] text-slate-400">
-          <span className="inline-flex items-center gap-1 font-medium text-slate-300">
-            <Globe className="h-3 w-3 text-slate-400" />
-            <span>GLOBAL</span>
-          </span>
-          <span className="inline-flex items-center gap-1 text-[10px] text-emerald-400 font-medium">
-            <CheckCircle2 className="h-2.5 w-2.5" />
-            <span>In Stock</span>
-          </span>
-        </div>
       </div>
 
       {/* Price & Action Buttons */}
-      <div className="mt-3 pt-2.5 border-t border-[#202330]">
-        <div className="flex items-baseline justify-between">
+      <div className="mt-3 pt-2.5 border-t border-white/10">
+        <div className="flex items-baseline justify-between font-mono">
           <div>
-            <span className="text-sm sm:text-base font-black text-white">
+            <span className="text-sm sm:text-base font-bold text-white tracking-tight">
               ${product.currentPrice.toFixed(2)}
             </span>
             {product.originalPrice > product.currentPrice && (
@@ -113,18 +88,18 @@ export const ProductCardRoyal: React.FC<ProductCardRoyalProps> = ({
         </div>
 
         {/* Action Buttons: 1-Click Buy & Add to Cart */}
-        <div className="mt-2.5 grid grid-cols-2 gap-1.5">
+        <div className="mt-2.5 grid grid-cols-2 gap-2">
           <button
             type="button"
             onClick={() => onInstantBuy(product)}
-            className="flex items-center justify-center rounded-lg bg-[#F5A623] hover:bg-[#e09419] py-1.5 text-xs font-black text-black transition-colors cursor-pointer"
+            className="flex items-center justify-center bg-[#F5A623] hover:bg-[#E09419] py-2 text-[11px] uppercase font-bold tracking-wider text-black transition-colors cursor-pointer font-['Space_Grotesk',sans-serif]"
           >
             Buy Now
           </button>
           <button
             type="button"
             onClick={() => onAddToCart(product)}
-            className="flex items-center justify-center gap-1 rounded-lg bg-[#1e212d] hover:bg-[#282c3c] border border-[#313548] py-1.5 text-xs font-bold text-white transition-colors cursor-pointer"
+            className="flex items-center justify-center gap-1 bg-[#1A1C24] hover:bg-[#252834] border border-white/10 py-2 text-[11px] uppercase font-bold tracking-wider text-white transition-colors cursor-pointer font-['Space_Grotesk',sans-serif]"
             title="Add to cart"
           >
             <ShoppingCart className="h-3 w-3 text-slate-300" />

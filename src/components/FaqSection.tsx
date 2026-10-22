@@ -15,32 +15,37 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ faqs, onLearnMore }) => 
   };
 
   return (
-    <section id="faq-section" className="py-14 sm:py-20 bg-[#121316] border-b border-[#1f2127]">
+    <section id="faq-section" className="py-16 sm:py-24 bg-[#0A0A0A] border-b border-white/10">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         
-        {/* Title matching screenshot */}
-        <div className="mb-10 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            Frequently Asked Questions
+        {/* Editorial Section Header */}
+        <div className="mb-12 text-center">
+          <div className="flex items-center justify-center gap-2 text-xs font-mono uppercase tracking-widest text-[#F5A623] mb-2">
+            <span>04</span>
+            <span className="text-white/20">/</span>
+            <span>LICENSING &amp; DISPATCH QUESTIONS</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight font-['Space_Grotesk',sans-serif]">
+            Frequently Asked Questions.
           </h2>
         </div>
 
-        {/* Clean Accordion List matching screenshot */}
-        <div className="space-y-2.5">
+        {/* Minimalist Accordion List */}
+        <div className="space-y-3">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
               <div
                 key={index}
-                className="overflow-hidden rounded-xl border border-[#232532] bg-[#1a1b22] transition-colors"
+                className="overflow-hidden border border-white/10 bg-[#111216] transition-colors"
               >
                 <button
                   type="button"
                   onClick={() => toggleIndex(index)}
-                  className="flex w-full items-center justify-between p-4 sm:p-5 text-left transition-colors hover:bg-[#20222b]"
+                  className="flex w-full items-center justify-between p-5 text-left transition-colors hover:bg-[#16171E] cursor-pointer"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-xs sm:text-sm font-semibold text-slate-200 pr-4">
+                  <span className="text-sm sm:text-base font-bold text-white pr-4 font-['Space_Grotesk',sans-serif]">
                     {faq.question}
                   </span>
                   <div className="flex h-6 w-6 shrink-0 items-center justify-center text-slate-400">
@@ -53,24 +58,13 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ faqs, onLearnMore }) => 
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-[#232532]">
+                  <div className="px-5 pb-5 pt-2 text-sm text-slate-400 leading-relaxed border-t border-white/10">
                     <p>{faq.answer}</p>
                   </div>
                 )}
               </div>
             );
           })}
-        </div>
-
-        {/* 'Learn More' Button matching screenshot */}
-        <div className="mt-10 flex justify-center">
-          <button
-            type="button"
-            onClick={onLearnMore}
-            className="rounded-lg border border-[#F5A623]/60 bg-transparent px-8 py-2.5 text-xs sm:text-sm font-semibold text-[#F5A623] hover:bg-[#F5A623]/10 transition-colors"
-          >
-            Learn More
-          </button>
         </div>
 
       </div>

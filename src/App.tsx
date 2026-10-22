@@ -76,7 +76,7 @@ export default function App() {
   const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-[#090a0d] text-slate-100 font-sans antialiased selection:bg-[#F5A623] selection:text-black">
+    <div className="min-h-screen bg-[#0A0A0A] text-slate-100 font-['Plus_Jakarta_Sans',sans-serif] antialiased selection:bg-[#F5A623] selection:text-black">
       
       {/* 1. Store Header matching RoyalCDKeys */}
       <Header
