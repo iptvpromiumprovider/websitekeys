@@ -74,11 +74,11 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <div className="flex items-center gap-4">
             <span className="text-slate-400 hidden sm:inline">
-              RoyalCDKeys Digital Store
+              KeyWin Digital Store
             </span>
             <span className="text-slate-600 hidden sm:inline">|</span>
             <a
-              href="https://wa.me/15205427975?text=Hello%20RoyalCDKeys,%20I%20want%20to%20order"
+              href="https://wa.me/15205427975?text=Hello%20KeyWin,%20I%20want%20to%20order"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-emerald-400 font-bold hover:underline"
@@ -99,13 +99,10 @@ export const Header: React.FC<HeaderProps> = ({
               <span>Telegram: @bigovv</span>
             </a>
             <span className="text-slate-600 hidden md:inline">|</span>
-            <a
-              href="mailto:support@royalcdkeys.com"
-              className="hidden md:flex items-center gap-1.5 text-amber-400 hover:underline"
-            >
-              <Mail className="h-3 w-3" />
-              <span>support@royalcdkeys.com</span>
-            </a>
+            <span className="hidden md:inline-flex items-center gap-1.5 text-amber-400 font-mono text-[11px]">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Instant Digital Dispatch (60s)</span>
+            </span>
           </div>
 
           <div className="flex items-center gap-4 text-xs">
@@ -179,7 +176,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Search bar & Utility Icons */}
           <div className="flex items-center gap-3 sm:gap-4 shrink-0">
             
-            {/* Search Input matching royalcdkeys */}
+            {/* Search Input for KeyWin catalog */}
             <div className="relative" ref={searchRef}>
               <div className="flex items-center rounded-lg border border-[#262838] bg-[#141620] overflow-hidden focus-within:border-[#F5A623]">
                 <input

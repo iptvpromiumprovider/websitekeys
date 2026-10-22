@@ -3,6 +3,7 @@ export type CategoryId = 'windows' | 'office' | 'software' | 'games' | 'subscrip
 export interface Product {
   id: string;
   slug: string;
+  aliases?: string[];
   title: string;
   shortDescription: string;
   categoryId: CategoryId;

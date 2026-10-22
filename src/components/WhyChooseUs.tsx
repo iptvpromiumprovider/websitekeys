@@ -63,7 +63,7 @@ export const WhyChooseUs: React.FC = () => {
             Honest &amp; Transparent Terms
           </span>
           <h2 className="mt-2 text-2xl sm:text-4xl font-black tracking-tight text-white">
-            Why Buy From RoyalCDKeys
+            Why Buy From KeyWin
           </h2>
           <p className="mt-2.5 text-xs sm:text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
             Clear guarantee conditions, wholesale direct pricing, and human support on every single purchase.

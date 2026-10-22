@@ -2,14 +2,14 @@ import React from 'react';
 import { Product } from '../types';
 import { ShoppingCart } from 'lucide-react';
 
-interface ProductCardRoyalProps {
+interface ProductCardKeyWinProps {
   product: Product;
   onAddToCart: (product: Product) => void;
   onInstantBuy: (product: Product) => void;
   onQuickView: (product: Product) => void;
 }
 
-export const ProductCardRoyal: React.FC<ProductCardRoyalProps> = ({
+export const ProductCardKeyWin: React.FC<ProductCardKeyWinProps> = ({
   product,
   onAddToCart,
   onInstantBuy,
@@ -58,55 +58,60 @@ export const ProductCardRoyal: React.FC<ProductCardRoyalProps> = ({
         {/* Clean Editorial Metadata (Zero Pill) */}
         <div className="mt-2.5 flex items-center justify-between text-[10px] font-mono uppercase tracking-wider text-slate-400">
           <span className="text-[#F5A623] font-bold">{product.platformTag || product.platform}</span>
-          <span>·</span>
-          <span>GLOBAL KEY</span>
+          <span className="text-slate-500">{product.regionTag || 'Global'}</span>
         </div>
 
-        {/* Product Title in Space Grotesk */}
+        {/* Title */}
         <h3
           onClick={() => onQuickView(product)}
-          className="mt-1 cursor-pointer text-xs sm:text-[13px] font-bold text-white line-clamp-2 leading-snug hover:text-[#F5A623] transition-colors min-h-[36px] font-['Space_Grotesk',sans-serif]"
-          title={product.title}
+          className="mt-1.5 text-xs sm:text-sm font-bold text-white line-clamp-2 hover:text-[#F5A623] cursor-pointer transition-colors leading-snug font-['Space_Grotesk',sans-serif]"
         >
           {product.title}
         </h3>
       </div>
 
-      {/* Price & Action Buttons */}
-      <div className="mt-3 pt-2.5 border-t border-white/10">
-        <div className="flex items-baseline justify-between font-mono">
-          <div>
-            <span className="text-sm sm:text-base font-bold text-white tracking-tight">
+      <div className="mt-3.5 pt-3 border-t border-white/10">
+        {/* Price display */}
+        <div className="flex items-baseline justify-between mb-2.5">
+          <div className="flex items-baseline gap-2">
+            <span className="font-mono text-base sm:text-lg font-black text-white">
               ${product.currentPrice.toFixed(2)}
             </span>
             {product.originalPrice > product.currentPrice && (
-              <span className="ml-1.5 text-[11px] text-slate-500 line-through">
+              <span className="font-mono text-[11px] text-slate-400 line-through">
                 ${product.originalPrice.toFixed(2)}
               </span>
             )}
           </div>
+          <span className="font-mono text-[9px] uppercase tracking-wider text-emerald-400 font-bold">
+            IN STOCK
+          </span>
         </div>
 
-        {/* Action Buttons: 1-Click Buy & Add to Cart */}
-        <div className="mt-2.5 grid grid-cols-2 gap-2">
-          <button
-            type="button"
-            onClick={() => onInstantBuy(product)}
-            className="flex items-center justify-center bg-[#F5A623] hover:bg-[#E09419] py-2 text-[11px] uppercase font-bold tracking-wider text-black transition-colors cursor-pointer font-['Space_Grotesk',sans-serif]"
-          >
-            Buy Now
-          </button>
+        {/* Action Buttons: Minimalist Neo-Brutalist Buttons */}
+        <div className="grid grid-cols-2 gap-2">
           <button
             type="button"
             onClick={() => onAddToCart(product)}
-            className="flex items-center justify-center gap-1 bg-[#1A1C24] hover:bg-[#252834] border border-white/10 py-2 text-[11px] uppercase font-bold tracking-wider text-white transition-colors cursor-pointer font-['Space_Grotesk',sans-serif]"
+            className="flex items-center justify-center gap-1.5 border border-white/10 bg-[#16171E] hover:bg-[#1E202B] hover:border-white/30 text-slate-200 py-2 text-[11px] font-bold uppercase tracking-wider transition-all duration-300 ease-out cursor-pointer font-mono"
             title="Add to cart"
           >
-            <ShoppingCart className="h-3 w-3 text-slate-300" />
+            <ShoppingCart className="h-3 w-3 text-[#F5A623]" />
             <span>Cart</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onInstantBuy(product)}
+            className="bg-[#F5A623] hover:bg-[#E09419] hover:-translate-y-0.5 text-black py-2 text-[11px] font-bold uppercase tracking-wider transition-all duration-300 ease-out cursor-pointer font-mono shadow-sm"
+          >
+            Buy Now
           </button>
         </div>
       </div>
     </div>
   );
 };
+
+// Backward-compatible alias
+export const ProductCardRoyal = ProductCardKeyWin;

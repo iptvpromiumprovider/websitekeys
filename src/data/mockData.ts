@@ -1,4 +1,4 @@
-import { Product, FaqItem, GuideArticle, ValueProp } from '../types';
+import { Product, FaqItem, ValueProp } from '../types';
 
 export const VALUE_PROPS: ValueProp[] = [
   {
@@ -10,7 +10,7 @@ export const VALUE_PROPS: ValueProp[] = [
   {
     id: 'clear-warranty',
     title: '100% Genuine Activation Guarantee',
-    description: 'All Microsoft Windows, Office, and gaming keys authenticate directly on official servers with lifetime validity.',
+    description: 'All Microsoft Windows, Office, and digital keys authenticate directly on official servers with lifetime validity.',
     iconName: 'ShieldCheck',
   },
   {
@@ -36,12 +36,13 @@ export const GENRE_CATEGORIES = [
 
 export const PRODUCTS: Product[] = [
   // ==========================================
-  // SECTION 1: TOP SOFTWARE DEALS (from screenshot)
+  // SECTION 1: WINDOWS OPERATING SYSTEM KEYS
   // ==========================================
   {
     id: 'win-11-pro-retail',
     slug: 'windows-11-pro-retail-cd-key',
-    sku: 'RCK-WIN11-PRO',
+    aliases: ['win-11-pro-retail'],
+    sku: 'KW-WIN11-PRO-RET',
     title: 'Windows 11 Pro Retail CD Key',
     shortDescription: 'Official Microsoft Windows 11 Pro 25-character digital retail product key. Full BitLocker encryption, Remote Desktop, and Hyper-V virtualization.',
     categoryId: 'windows',
@@ -89,8 +90,9 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'office-2024-pro-plus',
-    slug: 'microsoft-office-2024-professional-plus',
-    sku: 'RCK-OFF24-PRO',
+    slug: 'office-2024-professional-plus-cd-key',
+    aliases: ['microsoft-office-2024-professional-plus', 'office-2024-pro-plus'],
+    sku: 'KW-OFF24-PRO',
     title: 'Microsoft Office 2024 Professional Plus',
     shortDescription: 'Latest 2024 lifetime office productivity suite for 1 PC: Word, Excel, PowerPoint, Outlook, OneNote, and Access. Permanent bind to your PC.',
     categoryId: 'office',
@@ -138,8 +140,9 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'office-2024-standard-ltsc',
-    slug: 'microsoft-office-2024-standard-ltsc',
-    sku: 'RCK-OFF24-LTSC',
+    slug: 'office-2024-standard-ltsc-cd-key',
+    aliases: ['microsoft-office-2024-standard-ltsc', 'office-2024-standard-ltsc'],
+    sku: 'KW-OFF24-LTSC',
     title: 'Microsoft Office 2024 Standard LTSC',
     shortDescription: 'Long-Term Servicing Channel edition of Office 2024 for stable, offline enterprise workstations without forced feature updates.',
     categoryId: 'office',
@@ -174,8 +177,9 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'office-2021-pro-plus-ltsc',
-    slug: 'microsoft-office-2021-pro-plus-ltsc',
-    sku: 'RCK-OFF21-LTSC',
+    slug: 'office-2021-pro-plus-ltsc-cd-key',
+    aliases: ['microsoft-office-2021-pro-plus-ltsc', 'office-2021-pro-plus-ltsc'],
+    sku: 'KW-OFF21-LTSC',
     title: 'Microsoft Office 2021 Pro Plus LTSC',
     shortDescription: 'Stable enterprise LTSC edition of Office 2021 Pro Plus. Complete core suite with lifetime offline activation.',
     categoryId: 'office',
@@ -209,16 +213,17 @@ export const PRODUCTS: Product[] = [
     importantConditions: ['Single activation.'],
   },
   {
-    id: 'win-11-home-oem',
-    slug: 'windows-11-home-oem-cd-key',
-    sku: 'RCK-WIN11-HOME',
-    title: 'Windows 11 Home OEM CD Key',
-    shortDescription: 'Authentic Microsoft Windows 11 Home OEM digital key. Binds permanently to your motherboard for consumer desktop or gaming laptops.',
+    id: 'win-11-home-retail',
+    slug: 'windows-11-home-retail-cd-key',
+    aliases: ['win-11-home-oem', 'windows-11-home-oem-cd-key'],
+    sku: 'KW-WIN11-HOME',
+    title: 'Windows 11 Home Retail CD Key',
+    shortDescription: 'Authentic Microsoft Windows 11 Home digital retail product key. Full consumer desktop, gaming laptop, and multi-language support.',
     categoryId: 'windows',
     platform: 'Windows',
     platformTag: 'Windows',
-    edition: 'Home 64-bit OEM',
-    licenseType: 'OEM (Motherboard Bound)',
+    edition: 'Home 64-bit Retail',
+    licenseType: 'Retail (Transferable)',
     region: 'Global',
     regionTag: 'GLOBAL (GL)',
     deliveryMethod: 'Instant Digital Delivery',
@@ -230,9 +235,9 @@ export const PRODUCTS: Product[] = [
     inStock: true,
     stockCount: 50,
     imageUrl: '/assets/windows-11-pro.jpg',
-    tags: ['Windows 11 Home', 'OEM', 'Global', 'Lifetime'],
+    tags: ['Windows 11 Home', 'Retail', 'Global', 'Lifetime'],
     warrantyStatus: 'no-warranty',
-    warrantyText: 'Single motherboard permanent activation',
+    warrantyText: 'Single PC permanent activation',
     systemRequirements: {
       os: 'Clean Windows 11 Home install',
       processor: '1 GHz 64-bit multi-core with TPM 2.0',
@@ -240,14 +245,15 @@ export const PRODUCTS: Product[] = [
       storage: '64 GB storage',
       display: '720p display',
     },
-    whatsIncluded: ['25-digit OEM product key', 'Official Microsoft ISO download link'],
+    whatsIncluded: ['25-digit retail product key', 'Official Microsoft ISO download link'],
     activationSteps: ['Open Settings > System > Activation > Change Product Key.'],
-    importantConditions: ['Binds to 1 motherboard.'],
+    importantConditions: ['Lifetime activation on eligible system.'],
   },
   {
     id: 'win-10-pro-retail',
     slug: 'windows-10-pro-retail-cd-key',
-    sku: 'RCK-WIN10-PRO',
+    aliases: ['win-10-pro-retail'],
+    sku: 'KW-WIN10-PRO',
     title: 'Windows 10 Pro Retail CD Key',
     shortDescription: 'Official Microsoft Windows 10 Pro 25-character digital retail product key. Lifetime validity for 1 PC with BitLocker and Remote Desktop.',
     categoryId: 'windows',
@@ -294,7 +300,8 @@ export const PRODUCTS: Product[] = [
   {
     id: 'win-11-pro-oem',
     slug: 'windows-11-pro-oem-cd-key',
-    sku: 'RCK-WIN11-OEM',
+    aliases: ['win-11-pro-oem'],
+    sku: 'KW-WIN11-OEM',
     title: 'Windows 11 Pro OEM CD Key',
     shortDescription: 'Windows 11 Pro OEM license key for new hardware builds and system builders. Locks securely to your PC motherboard.',
     categoryId: 'windows',
@@ -329,8 +336,9 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'office-2021-pro-plus-retail',
-    slug: 'microsoft-office-2021-pro-plus-retail',
-    sku: 'RCK-OFF21-RET',
+    slug: 'office-2021-professional-plus-cd-key',
+    aliases: ['microsoft-office-2021-pro-plus-retail', 'office-2021-pro-plus-retail'],
+    sku: 'KW-OFF21-RET',
     title: 'Microsoft Office 2021 Pro Plus Retail',
     shortDescription: 'Official Microsoft Office 2021 Professional Plus Retail license key. Transferable between devices, permanent lifetime license.',
     categoryId: 'office',
@@ -365,8 +373,9 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'office-2019-pro-plus',
-    slug: 'microsoft-office-2019-pro-plus-product-key',
-    sku: 'RCK-OFF19-PRO',
+    slug: 'office-2019-professional-plus-cd-key',
+    aliases: ['microsoft-office-2019-pro-plus-product-key', 'office-2019-pro-plus'],
+    sku: 'KW-OFF19-PRO',
     title: 'Microsoft Office 2019 Pro Plus Product Key',
     shortDescription: 'Classic Office 2019 Pro Plus digital key for budget-conscious workstations and older Windows 10 installations.',
     categoryId: 'office',
@@ -402,7 +411,8 @@ export const PRODUCTS: Product[] = [
   {
     id: 'eset-home-security',
     slug: 'eset-home-security-essential-key',
-    sku: 'RCK-ESET-1Y',
+    aliases: ['eset-home-security'],
+    sku: 'KW-ESET-1Y',
     title: 'ESET Home Security Essential Key (1 Year)',
     shortDescription: 'Industry-leading lightweight antivirus protection with multi-layered ransomware shield, banking protection, and anti-phishing.',
     categoryId: 'software',
@@ -437,15 +447,16 @@ export const PRODUCTS: Product[] = [
   },
 
   // ==========================================
-  // SECTION 2: TOP SUBSCRIPTION DEALS (from screenshot & user uploads)
+  // SECTION 2: SUBSCRIPTION & CLOUD DEALS
   // ==========================================
   {
     id: 'gemini-advanced',
-    slug: 'google-ai-pro-gemini-advanced-1-month',
-    sku: 'RCK-GEMINI-1M',
+    slug: 'google-gemini-advanced-ai-pro',
+    aliases: ['google-ai-pro-gemini-advanced-1-month', 'gemini-advanced'],
+    sku: 'KW-GEMINI-1M',
     title: 'Google AI Pro: Gemini Advanced - 1 Month',
     shortDescription: 'Full access to Google Gemini Advanced powered by Gemini Ultra/1.5 Pro models with 2 Million token context, Google Docs/Drive integration, and 2TB Cloud storage.',
-    categoryId: 'subscription',
+    categoryId: 'subscriptions',
     platform: 'Cross-platform',
     platformTag: 'Cross-platform',
     edition: 'Advanced 1 Month Plan',
@@ -484,7 +495,8 @@ export const PRODUCTS: Product[] = [
   {
     id: 'xbox-game-pass-ultimate',
     slug: 'xbox-game-pass-ultimate-1-month-global',
-    sku: 'RCK-XBOX-GPU1M',
+    aliases: ['xbox-game-pass-ultimate'],
+    sku: 'KW-XBOX-GPU1M',
     title: 'Xbox Game Pass Ultimate - 1 Month Global Key',
     shortDescription: 'Instant digital code for Xbox Game Pass Ultimate. Play hundreds of high-quality games on PC, Xbox Series X|S, and cloud gaming including EA Play.',
     categoryId: 'subscriptions',
@@ -533,7 +545,8 @@ export const PRODUCTS: Product[] = [
   {
     id: 'cyberpunk-2077-steam',
     slug: 'cyberpunk-2077-steam-key-global',
-    sku: 'RCK-CYBER-STM',
+    aliases: ['cyberpunk-2077-steam'],
+    sku: 'KW-CYBER-STM',
     title: 'Cyberpunk 2077 Steam CD Key (PC Global)',
     shortDescription: 'Official Steam digital CD key for Cyberpunk 2077. Experience the acclaimed open-world action-adventure RPG set in the megalopolis of Night City.',
     categoryId: 'software',
@@ -564,12 +577,12 @@ export const PRODUCTS: Product[] = [
 
 export const FAQS: FaqItem[] = [
   {
-    question: 'Are The Digital Keys Sold On RoyalCDKeys Legitimate?',
+    question: 'Are The Digital Keys Sold On KeyWin Legitimate?',
     answer:
-      'Yes, absolutely. All digital keys sold on RoyalCDKeys are authentic OEM and Retail licenses sourced directly from authorized wholesale software distributors and enterprise liquidations. They activate directly with Microsoft and official platform validation servers with zero third-party activation tools.',
+      'Yes, absolutely. All digital keys sold on KeyWin are authentic OEM and Retail licenses sourced directly from authorized wholesale software distributors and enterprise liquidations. They activate directly with Microsoft and official platform validation servers with zero third-party activation tools.',
   },
   {
-    question: 'Why Are RoyalCDKeys Prices So Low?',
+    question: 'Why Are KeyWin Prices So Low?',
     answer:
       'We operate on wholesale volume margins without physical packaging, retail store overhead, or expensive middlemen. By delivering digital activation keys instantly via WhatsApp, Telegram, and Email, we pass savings of up to 98% directly to you.',
   },
@@ -596,10 +609,10 @@ export const FAQS: FaqItem[] = [
   {
     question: 'Are There Any Hidden Fees At Checkout?',
     answer:
-      'No. The price shown on RoyalCDKeys is the final price you pay. There are zero hidden processing fees, recurring surprises, or surcharge costs at checkout.',
+      'No. The price shown on KeyWin is the final price you pay. There are zero hidden processing fees, recurring surprises, or surcharge costs at checkout.',
   },
   {
-    question: 'How Do I Order On RoyalCDKeys?',
+    question: 'How Do I Order On KeyWin?',
     answer:
       'Ordering is fast and personal. Simply enter your email, WhatsApp, or Telegram handle (@bigovv) on the product page. Our team confirms your order instantly and dispatches your license directly.',
   },
@@ -609,7 +622,7 @@ export const FAQS: FaqItem[] = [
       'No physical disc or USB drive is required. You download the official software directly from Microsoft (e.g., Microsoft Media Creation Tool or setup.office.com) and use your 25-character digital product key to activate it.',
   },
   {
-    question: 'Can I Buy From RoyalCDKeys Worldwide?',
+    question: 'Can I Buy From KeyWin Worldwide?',
     answer:
       'Yes! All our Windows licenses, Office packages, and game keys are region-free Global editions that can be activated from any country worldwide without VPN or regional restrictions.',
   },

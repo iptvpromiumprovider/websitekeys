@@ -62,11 +62,11 @@ export const ProductBuyPage: React.FC<ProductBuyPageProps> = ({
 
   // Related products from other items
   const relatedProducts = allProducts
-    .filter((p) => p.id !== product.id && p.category === product.category)
+    .filter((p) => p.id !== product.id && (p.categoryId === product.categoryId || (p as unknown as { category?: string }).category === product.categoryId))
     .slice(0, 4);
 
   const handleWhatsAppDirect = () => {
-    const message = `Hello RoyalCDKeys! I want to purchase:\n- ${quantity}x ${product.title} ($${totalPrice.toFixed(2)} USD)\nSKU: ${product.sku}\nPlatform: ${product.platformTag || product.platform}\n${customerEmail.trim() ? `My Email: ${customerEmail.trim()}\n` : ''}${orderNote.trim() ? `Note: ${orderNote.trim()}\n` : ''}Please send key and payment instructions.`;
+    const message = `Hello KeyWin! I want to purchase:\n- ${quantity}x ${product.title} ($${totalPrice.toFixed(2)} USD)\nSKU: ${product.sku}\nPlatform: ${product.platformTag || product.platform}\n${customerEmail.trim() ? `My Email: ${customerEmail.trim()}\n` : ''}${orderNote.trim() ? `Note: ${orderNote.trim()}\n` : ''}Please send key and payment instructions.`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   };
@@ -118,7 +118,7 @@ export const ProductBuyPage: React.FC<ProductBuyPageProps> = ({
         {
           productId: product.id,
           productTitle: product.title,
-          key: product.category === 'subscriptions' || product.category === 'streaming'
+          key: product.categoryId === 'subscriptions' || product.categoryId === 'subscription'
             ? 'Credentials sent via Email & WhatsApp/Telegram'
             : generatedKey,
           downloadUrl: 'https://setup.office.com',
@@ -151,7 +151,7 @@ export const ProductBuyPage: React.FC<ProductBuyPageProps> = ({
               <span>Back to Store Catalog</span>
             </button>
             <span className="text-slate-600">/</span>
-            <span className="capitalize">{product.category}</span>
+            <span className="capitalize">{product.categoryId}</span>
             <span className="text-slate-600">/</span>
             <span className="text-slate-200 font-medium truncate max-w-xs">{product.title}</span>
           </div>
@@ -178,7 +178,7 @@ export const ProductBuyPage: React.FC<ProductBuyPageProps> = ({
                 </div>
               </div>
               <a
-                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hello RoyalCDKeys, my order ID is ${successOrder.orderId} for ${product.title}. Please provide instant support.`)}`}
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hello KeyWin, my order ID is ${successOrder.orderId} for ${product.title}. Please provide instant support.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] px-4 py-2.5 text-xs font-black text-black transition-colors"
@@ -616,7 +616,7 @@ export const ProductBuyPage: React.FC<ProductBuyPageProps> = ({
                     <strong className="text-white">Change Product Key:</strong> Click on <span className="text-amber-400">Change product key</span> or enter it directly during installation.
                   </li>
                   <li>
-                    <strong className="text-white">Paste your license code:</strong> Enter your 25-character digital product key received from RoyalCDKeys.
+                    <strong className="text-white">Paste your license code:</strong> Enter your 25-character digital product key received from KeyWin.
                   </li>
                   <li>
                     <strong className="text-white">Activate:</strong> Click Next &gt; Activate. Your copy will instantly become fully genuine and registered.

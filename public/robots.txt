@@ -1,6 +1,11 @@
-# Robots.txt for RoyalCDKeys
+# Robots.txt for KeyWin Digital Software Marketplace
 User-agent: *
 Allow: /
+Allow: /assets/
 
-# Sitemaps
-Sitemap: https://royalcdkeys.com/sitemap.xml
+# Disallow internal search or temporary parameter duplicates
+Disallow: /*?search=*
+Disallow: /*?filter=*
+
+# Production Sitemap
+Sitemap: https://keywin.vercel.app/sitemap.xml

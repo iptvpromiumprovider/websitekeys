@@ -7,6 +7,9 @@ interface RoyalLogoProps {
   className?: string;
 }
 
+/**
+ * KeyWin Brand Logo wrapper (replaces legacy RoyalLogo).
+ */
 export const RoyalLogo: React.FC<RoyalLogoProps> = (props) => {
   return <BrandLogo {...props} />;
 };

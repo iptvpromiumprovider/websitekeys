@@ -1,45 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
   <url>
-    <loc>https://royalcdkeys.com/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <loc>https://keywin.vercel.app/</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- Categories -->
   <url>
-    <loc>https://royalcdkeys.com/?product=windows-11-pro-retail-cd-key</loc>
-    <lastmod>2026-09-15</lastmod>
+    <loc>https://keywin.vercel.app/windows/</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://royalcdkeys.com/?product=windows-10-pro-retail-cd-key</loc>
-    <lastmod>2026-09-15</lastmod>
+    <loc>https://keywin.vercel.app/office/</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://royalcdkeys.com/?product=office-2024-professional-plus-cd-key</loc>
-    <lastmod>2026-09-15</lastmod>
+    <loc>https://keywin.vercel.app/subscriptions/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://keywin.vercel.app/software/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Canonical Product Pages -->
+  <url>
+    <loc>https://keywin.vercel.app/products/windows-11-pro-retail-cd-key/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://keywin.vercel.app/products/office-2024-professional-plus-cd-key/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://keywin.vercel.app/products/windows-10-pro-retail-cd-key/</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://royalcdkeys.com/?product=office-2021-professional-plus-cd-key</loc>
-    <lastmod>2026-09-15</lastmod>
+    <loc>https://keywin.vercel.app/products/windows-11-home-retail-cd-key/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://keywin.vercel.app/products/windows-11-pro-oem-cd-key/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://keywin.vercel.app/products/office-2024-standard-ltsc-cd-key/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://keywin.vercel.app/products/office-2021-pro-plus-ltsc-cd-key/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://keywin.vercel.app/products/office-2021-professional-plus-cd-key/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://keywin.vercel.app/products/office-2019-professional-plus-cd-key/</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://royalcdkeys.com/?product=google-gemini-advanced-ai-pro</loc>
-    <lastmod>2026-09-15</lastmod>
+    <loc>https://keywin.vercel.app/products/eset-home-security-essential-key/</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://royalcdkeys.com/?product=windows-11-home-retail-cd-key</loc>
-    <lastmod>2026-09-15</lastmod>
+    <loc>https://keywin.vercel.app/products/google-gemini-advanced-ai-pro/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://keywin.vercel.app/products/xbox-game-pass-ultimate-1-month-global/</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://keywin.vercel.app/products/cyberpunk-2077-steam-key-global/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- Informational & Policy Pages -->
+  <url>
+    <loc>https://keywin.vercel.app/about/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://keywin.vercel.app/contact/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://keywin.vercel.app/delivery/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://keywin.vercel.app/refunds/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://keywin.vercel.app/terms/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://keywin.vercel.app/privacy/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

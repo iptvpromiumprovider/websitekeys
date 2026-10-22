@@ -36,7 +36,7 @@ export const SeoContentSection: React.FC = () => {
                 How Does Digital Software Delivery Work?
               </h3>
               <p className="mt-2">
-                Modern software publishers maintain public Content Delivery Networks (CDNs) where anyone can download official, unmodified installer ISOs (such as the official Microsoft Windows Media Creation Tool or Office CDN). When you purchase a digital key from CoreLicense, you receive the cryptographic key along with direct URLs to these official vendor servers. You install the clean software and enter your key to unlock full features permanently.
+                Modern software publishers maintain public Content Delivery Networks (CDNs) where anyone can download official, unmodified installer ISOs (such as the official Microsoft Windows Media Creation Tool or Office CDN). When you purchase a digital key from KeyWin, you receive the cryptographic key along with direct URLs to these official vendor servers. You install the clean software and enter your key to unlock full features permanently.
               </p>
             </div>
 
@@ -93,7 +93,7 @@ export const SeoContentSection: React.FC = () => {
                     <HelpCircle className="h-3.5 w-3.5 text-blue-600" /> 3. Regional Restrictions & Microsoft Accounts
                   </div>
                   <p className="mt-1 text-xs text-slate-600">
-                    All keys on CoreLicense are marked with explicit regional validity (e.g. Global/Worldwide). Office 2024 requires a free personal or business Microsoft Account for redemption.
+                    All keys on KeyWin are marked with explicit regional validity (e.g. Global/Worldwide). Office 2024 requires a free personal or business Microsoft Account for redemption.
                   </p>
                 </div>
               </div>

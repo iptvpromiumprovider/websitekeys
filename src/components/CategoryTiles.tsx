@@ -1,6 +1,6 @@
 import React from 'react';
 import { GENRE_CATEGORIES } from '../data/mockData';
-import { RoyalLogo } from './RoyalLogo';
+import { BrandLogo } from './BrandLogo';
 
 interface CategoryTilesProps {
   onSelectGenre: (genre: string) => void;
@@ -41,7 +41,7 @@ export const CategoryTiles: React.FC<CategoryTilesProps> = ({ onSelectGenre }) =
               {/* RK Crown emblem in top-right / bottom corner matching screenshot */}
               <div className="absolute top-2.5 right-2.5 opacity-80 group-hover:opacity-100 transition-opacity">
                 <div className="flex h-6 w-6 items-center justify-center rounded-md bg-black/60 border border-amber-500/30 backdrop-blur-xs">
-                  <span className="text-[9px] font-black text-amber-400">RK</span>
+                  <span className="text-[9px] font-black text-[#F5A623]">KW</span>
                 </div>
               </div>
 

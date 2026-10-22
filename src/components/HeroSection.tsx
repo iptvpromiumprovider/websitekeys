@@ -65,7 +65,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </button>
 
               <a
-                href="https://wa.me/15205427975?text=Hello%20RoyalCDKeys,%20I%20want%20to%20order"
+                href="https://wa.me/15205427975?text=Hello%20KeyWin,%20I%20want%20to%20order"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#121E17] hover:bg-[#182B21] hover:-translate-y-0.5 border border-emerald-500/40 px-5 py-3.5 text-xs uppercase font-bold tracking-wider text-emerald-400 transition-all duration-300 ease-out cursor-pointer font-mono"

@@ -11,8 +11,9 @@ import {
   ShieldCheck,
   Zap,
 } from 'lucide-react';
-import { RoyalLogo } from './RoyalLogo';
+import { BrandLogo } from './BrandLogo';
 import { ProductLeadForm } from './ProductLeadForm';
+import { SITE_CONFIG } from '../config/siteConfig';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -39,21 +40,20 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     0
   );
 
-  const WHATSAPP_NUMBER = '15205427975';
-  const WHATSAPP_DISPLAY = '+1 520-542-7975';
-  const TELEGRAM_HANDLE = '@bigovv';
-  const CONTACT_EMAIL = 'support@royalcdkeys.com';
+  const WHATSAPP_NUMBER = SITE_CONFIG.contacts.whatsapp.value;
+  const WHATSAPP_DISPLAY = SITE_CONFIG.contacts.whatsapp.label;
+  const TELEGRAM_HANDLE = SITE_CONFIG.contacts.telegram.label;
 
   const itemsSummary = items
     .map(
       (item) =>
         `- ${item.quantity}x ${item.product.title} ($${(
           item.product.currentPrice * item.quantity
-        ).toFixed(2)})`
+        ).toFixed(2)}) [SKU: ${item.product.sku}]`
     )
     .join('\n');
 
-  const formattedMessage = `Hello RoyalCDKeys / @bigovv! I want to purchase the following digital license(s):
+  const formattedMessage = `Hello KeyWin / @bigovv! I want to purchase the following digital license(s):
 
 ${itemsSummary}
 
@@ -75,16 +75,6 @@ Please provide activation key delivery and instructions. Thank you!`;
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  const handleEmailOrder = () => {
-    const subject = `Order Request: ${items
-      .map((i) => `${i.quantity}x ${i.product.title}`)
-      .join(', ')} ($${total.toFixed(2)})`;
-    const mailtoUrl = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(formattedMessage)}`;
-    window.location.href = mailtoUrl;
-  };
-
   const handleCopy = () => {
     navigator.clipboard.writeText(formattedMessage);
     setCopied(true);
@@ -100,13 +90,13 @@ Please provide activation key delivery and instructions. Thank you!`;
         {/* Modal Header */}
         <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[#242635] bg-[#121318]/95 px-6 py-4 backdrop-blur-md">
           <div className="flex items-center gap-3">
-            <RoyalLogo size="sm" showText={false} />
+            <BrandLogo size="sm" showText={false} />
             <div>
               <h2 className="text-base font-bold text-white">
                 Complete Your Order
               </h2>
               <p className="text-[11px] text-slate-400">
-                Direct instant order via WhatsApp or Email • No checkout gateway
+                Direct instant order via WhatsApp or Telegram • 60-Second Dispatch
               </p>
             </div>
           </div>
@@ -280,32 +270,6 @@ Please provide activation key delivery and instructions. Thank you!`;
               <ExternalLink className="h-5 w-5 text-white shrink-0" />
             </button>
 
-            {/* Email Direct Button */}
-            <button
-              type="button"
-              onClick={handleEmailOrder}
-              className="w-full group flex items-center justify-between rounded-xl bg-[#F5A623] hover:bg-[#e09419] p-4 text-black font-bold transition-all shadow-lg shadow-[#F5A623]/20 cursor-pointer"
-            >
-              <div className="flex items-center gap-3 text-left">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black/15">
-                  <Mail className="h-6 w-6 text-black" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm sm:text-base font-extrabold text-black">
-                      Order via Email
-                    </span>
-                    <span className="rounded bg-black/20 px-2 py-0.5 text-[10px] font-extrabold text-black">
-                      OFFICIAL DISPATCH
-                    </span>
-                  </div>
-                  <p className="text-xs text-black/80 font-medium">
-                    Send order to {CONTACT_EMAIL}
-                  </p>
-                </div>
-              </div>
-              <ExternalLink className="h-5 w-5 text-black shrink-0" />
-            </button>
           </div>
 
           {/* Pre-formatted Message & Copy Option */}

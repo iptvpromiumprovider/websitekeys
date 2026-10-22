@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { OrderConfirmation } from '../types';
 import { X, Key, ShieldCheck, Download, ExternalLink, Copy, Check, Clock, User } from 'lucide-react';
-import { RoyalLogo } from './RoyalLogo';
+import { BrandLogo } from './BrandLogo';
 
 interface AccountModalProps {
   isOpen: boolean;
